@@ -10,6 +10,7 @@ html {
 
 body, nav, header, main, footer {
   width: 100%;
+
 }
 
 body {
@@ -111,13 +112,38 @@ nav a {
   width: 100%;
 }
 
+.presentation {
+  text-align: center;
+  padding-top: 150px;
+}
+
 .ghost-main {
   width: 1100px;
-  height: auto;
-  position: absolute;
-  top: 120px; 
-  left: 50%;
-  transform: translateX(-50%);
+  margin: -120px auto;
   display: flex;
-  z-index: 0;
 }
+  
+.quienes-somos {
+  width: 100%;
+  background-color: #755850;
+  margin-top: 20vh;
+  padding: 50px;
+
+}
+
+.quienes-somos h2 {
+  color: #faf2e1;
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.quienes-somos p {
+  color: #faf2e1;
+  font-size: 30px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
