@@ -7,6 +7,7 @@ html {
   to { opacity: 1; }
 }
 
+
 * {
   margin: 0;
   padding: 0;
@@ -74,14 +75,26 @@ nav a {
 }
 
 .nav-left ul li,
-.nav-right ul li {
+.nav-right ul li,
+.carrito {
   background-color: #b48a7e; 
   transition: background-color 0.3s ease;
 }
 
 .nav-left ul li:hover,
-.nav-right ul li:hover {
+.nav-right ul li:hover,
+.carrito:hover {
   background-color: #755850;
+}
+
+.carrito {
+  position: absolute;
+  top: 10px;
+  right: 10px; 
+  transform: translateX(-50%);
+  cursor: pointer;
+  border-radius: 50px
+
 }
 
 .logo {
@@ -166,10 +179,10 @@ nav a {
   animation: aparecer 4s ease-in-out
 }
 
-aside {
+/*aside {
   width: 200px;
 
-}
+}*/
 
 main {
   display: flex;
@@ -188,14 +201,153 @@ main {
   
 }
 
+.articles {
+   color: #755850;
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 50px;
+  margin-top: 90px;
+}
+
+.articles button {
+  background-color: #755850;
+  color: #faf2e1;
+  border: none;
+  padding: 10px 10px;
+  font-size: 25px;
+  font-style: italic;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.articles button:hover {
+  background-color: #b48a7e;
+
+}
+
 .item {
   background-color: #b48a7e;
   border-radius: 30px;
   padding: 10px;
   text-align: center;
-  transition: background-color 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s;
+  
 }
 
 .item:hover {
-  background-color: #755850;
+  transform: scale(1.05);
 }
+
+.item h3 a {
+  font-size: 35px;
+  font-style: italic;
+  color: #faf2e1;       
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.item h3 a:hover {
+  color: #34241f;
+}
+
+.item p {
+  font-size: 25px;
+  color: #faf2e1;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.item button {
+  background-color: #34241f;
+  color: #faf2e1;
+  border: none;
+  padding: 10px 30px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.item button:hover {
+background-color: #6a534d;
+}
+
+
+/* AJUSTES DE CELU*/
+@media (max-width: 768px) {
+
+  nav {
+    height: auto;
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    text-align: center;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 15px;
+    padding: 0;
+  }
+
+  nav a {
+    font-size: 22px;
+  }
+
+  .nav-left, .nav-right {
+    position: static;
+    transform: none;
+  }
+
+
+  .logo {
+    width: 250px;
+    top: 250px;
+  }
+
+  .presentation h1 {
+    font-size: 40px;
+    position: static;
+    transform: none;
+    margin-top: 50px;
+  }
+
+  .presentation h2 {
+    font-size: 18px;
+    position: static;
+    transform: none;
+    margin-top: 10px;
+  }
+
+  .ghost-main {
+    width: 90%;
+    margin: 10px auto;
+  }
+  main {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  aside {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .articulos {
+    grid-template-columns: 1fr;
+  }
+
+  .item {
+    text-align: center;
+  }
+}
+
+
+
+
