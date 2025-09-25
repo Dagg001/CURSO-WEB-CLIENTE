@@ -195,53 +195,87 @@ main {
 .articulos {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 28px;
   padding: 20px;
   flex-grow: 1;
   
 }
 
-.articles {
-   color: #755850;
+.articles { 
+  color: #755850;
   font-size: 50px;
   text-align: center;
   margin-bottom: 50px;
-  margin-top: 90px;
-}
+margin-top: 90px; } 
 
 .articles button {
+  
+  background-color: #755850;
+  color: #faf2e1; border: none;
+  padding: 10px 10px; font-size: 25px; font-style: italic;
+  border-radius: 10px; cursor: pointer;
+  transition: background-color 0.3s ease; } 
+      
+.articles button:hover
+      
+{ background-color: #b48a7e; }
+
+.item {
+  background-color: #b48a7e;
+  border-radius: 30px;
+  padding: 6px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s;
+  transform: scale(0.95);
+  transform-origin: center;
+  
+}
+
+.btn-filtrar {
   background-color: #755850;
   color: #faf2e1;
   border: none;
-  padding: 10px 10px;
+  padding: 10px 20px;
   font-size: 25px;
   font-style: italic;
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: inline-block;
+  margin-top: 10px;
 }
 
-.articles button:hover {
+.btn-filtrar:hover {
   background-color: #b48a7e;
-
 }
 
-.item {
-  background-color: #b48a7e;
-  border-radius: 30px;
-  padding: 10px;
-  text-align: center;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s;
-  
+#filtro-input {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-top: 0;
+  padding: 0 12px;
+  font-size: 18px;
+  border: 2px solid #755850;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.4s ease;
+}
+
+#toggle-filtro:checked ~ #filtro-input {
+  max-height: 50px;
+  opacity: 1;
+  margin-top: 15px;
+  padding: 8px 12px;
 }
 
 .item:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .item h3 a {
-  font-size: 35px;
+  font-size: 32px;
   font-style: italic;
   color: #faf2e1;       
   text-decoration: none;
@@ -254,7 +288,7 @@ main {
 }
 
 .item p {
-  font-size: 25px;
+  font-size: 22px;
   color: #faf2e1;
   font-weight: bold;
   margin-bottom: 10px;
@@ -264,8 +298,8 @@ main {
   background-color: #34241f;
   color: #faf2e1;
   border: none;
-  padding: 10px 30px;
-  font-size: 16px;
+  padding: 8px 24px;
+  font-size: 15px;
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -275,79 +309,188 @@ main {
 background-color: #6a534d;
 }
 
+.item img {
+  display: block;
+  width: 90%;
+  height: auto;
+  max-height: 260px;
+  margin: 0 auto 10px;
+  border-radius: 12px;
+}
 
 /* AJUSTES DE CELU*/
-@media (max-width: 768px) {
 
-  nav {
-    height: auto;
-    padding: 15px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    text-align: center;
+/* Tablet */
+@media (max-width: 1024px) {
+  .logo,
+  .ghost-main {
+    display: none;
   }
 
   nav ul {
-    flex-direction: column;
-    gap: 15px;
-    padding: 0;
+    gap: 30px;
   }
 
   nav a {
     font-size: 22px;
   }
 
-  .nav-left, .nav-right {
-    position: static;
-    transform: none;
-  }
-
-
-  .logo {
-    width: 250px;
-    top: 250px;
-  }
-
   .presentation h1 {
-    font-size: 40px;
     position: static;
     transform: none;
-    margin-top: 50px;
+    margin: 0;
+    font-size: 70px;
+    text-align: center;
   }
 
   .presentation h2 {
-    font-size: 18px;
     position: static;
     transform: none;
     margin-top: 10px;
-  }
-
-  .ghost-main {
-    width: 90%;
-    margin: 10px auto;
-  }
-  main {
-    flex-direction: column;
-    padding: 10px;
-  }
-
-  aside {
-    width: 100%;
-    margin-bottom: 20px;
+    font-size: 32px;
     text-align: center;
+  }
+
+  .presentation {
+    padding-top: 50px;
+  }
+
+  .articulos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    justify-items: center;
+  }
+
+  .item {
+    transform: scale(0.9);
+    max-width: 320px;
+    padding: 8px;
+  }
+
+  .item h3 a {
+    font-size: 26px;
+  }
+
+  .item p {
+    font-size: 18px;
+  }
+
+  .item button {
+    font-size: 14px;
+    padding: 8px 18px;
+  }
+
+  .item:hover {
+    transform: scale(0.98);
+  }
+
+  .item img {
+    width: 85%;
+    max-height: 220px;
+    margin-bottom: 8px;
+  }
+}
+
+/* celularr */
+@media (max-width: 768px) {
+  .logo,
+  .ghost-main {
+    display: none;
+  }
+
+  nav {
+    height: auto;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .nav-left, 
+  .nav-right {
+    position: static;
+    transform: none;
+    margin: 10px 0;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .presentation h1 {
+    position: static;
+    transform: none;
+    margin: 0;
+    font-size: 50px;
+    text-align: center;
+  }
+
+  .presentation h2 {
+    position: static;
+    transform: none;
+    margin-top: 8px;
+    font-size: 26px;
+    text-align: center;
+  }
+
+  .presentation {
+    padding-top: 40px;
+  }
+
+  .quienes-somos {
+    padding: 20px;
+    margin-top: 10vh;
+  }
+
+  .quienes-somos h2 {
+    font-size: 28px;
+  }
+
+  .quienes-somos p {
+    font-size: 18px;
   }
 
   .articulos {
     grid-template-columns: 1fr;
+    gap: 12px;
+    justify-items: center;
   }
 
   .item {
-    text-align: center;
+    padding: 8px;
+    transform: scale(0.85);
+    max-width: 300px;
+  }
+
+  .item h3 a {
+    font-size: 20px;
+  }
+
+  .item p {
+    font-size: 14px;
+  }
+
+  .item button {
+    font-size: 13px;
+    padding: 6px 16px;
+  }
+
+  .item:hover {
+    transform: scale(0.96);
+  }
+
+  .item img {
+    width: 80%;
+    max-height: 180px;
+    margin-bottom: 6px;
+  }
+
+  .articles {
+    font-size: 28px;
+    margin-top: 40px;
+  }
+
+  .articles button {
+    font-size: 16px;
+    padding: 6px 12px;
   }
 }
-
-
-
-

@@ -1,3 +1,4 @@
+<!-- debo colocarle una pagina al carrito de compras, un imputo a filtros, achicar los articulos para tener una visibilidad mas dinamica y hacerlo responsive -->
 <!DOCTYPE html>
 <html lang="es-AR">
 <head>
@@ -29,7 +30,7 @@
 
     <header>
         <div class="logo-container">
-            <img class="logo" src="./img/logo_z.png" alt="logo">
+            <img class="logo" src="./img/logo_z.jpg" alt="logo">
         </div>
 
         <div class="presentation" id="presentation">
@@ -52,14 +53,17 @@
 </section>
 
 <section class="articles" id="articles">
-    <h2>Artículos Destacados</h2>
+  <h2>Artículos Destacados</h2>
 
-<button id="filtrar">filtrar</button>
 
+<input type="checkbox" id="toggle-filtro" hidden>
+<label for="toggle-filtro" class="btn-filtrar">Filtrar</label>
+<input type="text" id="filtro-input" placeholder="Escribe aquí...">
 </section>
+
 <main>
 
-  <!-- 
+  <!--  
   <aside>
     <ul>
       <li><a href="#libros">Libros</a></li>
