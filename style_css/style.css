@@ -1,498 +1,110 @@
-html {
-  scroll-behavior: smooth;
-}
+html{scroll-behavior:smooth}
 
-@keyframes aparecer {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+@keyframes aparecer{from{opacity:0}to{opacity:1}}
 
+*{margin:0;padding:0;box-sizing:border-box}
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-    
+body{background:#faf2e1;animation:aparecer 1s ease-in-out}
 
-}
+nav{background:#b48a7e;height:100px}
+nav ul{list-style:none;display:flex;gap:80px}
+nav ul li{border-radius:15px}
+nav a{text-decoration:none;color:#faf2e1;font-weight:700;font-size:32px}
 
-body, nav, header, main, footer {
-  width: 100%;
+.nav-left,.nav-right{position:absolute;top:30px;height:100%;white-space:nowrap;line-height:50px}
+.nav-left{right:75%;transform:translateX(50%)}
+.nav-right{left:50%;transform:translateX(50%)}
 
-}
+.nav-left ul li,.nav-right ul li,.carrito{background:#b48a7e;transition:background-color .3s ease}
+.nav-left ul li:hover,.nav-right ul li:hover,.carrito:hover{background:#755850}
 
-body {
-  background-color: #faf2e1;
-    animation: aparecer 1s ease-in-out;
+.carrito{position:absolute;top:10px;right:10px;transform:translateX(-50%);cursor:pointer;border-radius:50px}
 
-}
+.logo{width:400px;height:auto;position:absolute;top:-55px;left:50%;transform:translateX(-50%);z-index:1}
 
-nav {
-  background-color: #b48a7e;
-  height: 100px;
-  width: 100%;
-  top: 0;
-  left: 0;
-  align-items: center;
-}
+.presentation{text-align:center;padding-top:150px}
+.presentation h1,.presentation h2{position:absolute;left:50%;transform:translate(-50%,-50%);text-align:center;margin:0;color:#b48a7e;z-index:100;width:100%}
+.presentation h1{top:43%;font-family:"Bodoni MT",serif;font-size:100px;animation:aparecer 1.5s ease-in-out}
+.presentation h2{top:52%;font-size:35px;animation:aparecer 2s ease-in-out}
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 80px;
-  height: 7%;                  
-}
+.ghost-main{width:1100px;margin:-120px auto;display:block}
 
-nav ul li {
-  border-radius: 15px;                 
-}
+.quienes-somos{width:100%;background:#755850;margin-top:20vh;padding:50px}
+.quienes-somos h2{color:#faf2e1;font-size:50px;text-align:center;margin-bottom:50px;animation:aparecer 4s ease-in-out}
+.quienes-somos p{color:#faf2e1;font-size:30px;text-align:center;max-width:800px;margin:0 auto;line-height:1.6;animation:aparecer 4s ease-in-out}
 
-nav a {
-  text-decoration: none;
-  color: #faf2e1;             
-  font-weight: bold;
-  font-size: 32px;
-}
+main{display:flex;flex-direction:row;padding:20px;min-height:70vh}
 
-.nav-left {
-  position: absolute;
-  height: 100%;
-  top: 30px; 
-  right: 75%;
-  transform: translateX(50%);
-  white-space: nowrap;
-  line-height: 50px;
-}
+.articulos{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;padding:20px;flex-grow:1}
 
-.nav-right {
-  position: absolute;
-  height: 100%;
-  top: 30px; 
-  left: 50%;
-  transform: translateX(50%);
-  white-space: nowrap;
-  line-height: 50px;
-}
+.articles{color:#755850;font-size:50px;text-align:center;margin:90px 0 50px}
 
-.nav-left ul li,
-.nav-right ul li,
-.carrito {
-  background-color: #b48a7e; 
-  transition: background-color 0.3s ease;
-}
+.btn-filtrar{background:#755850;color:#faf2e1;border:none;padding:10px 20px;font-size:25px;font-style:italic;border-radius:10px;cursor:pointer;transition:background-color .3s ease;display:inline-block;margin-top:10px}
+.btn-filtrar:hover{background:#b48a7e}
 
-.nav-left ul li:hover,
-.nav-right ul li:hover,
-.carrito:hover {
-  background-color: #755850;
-}
+#filtro-input{max-height:0;opacity:0;overflow:hidden;margin-top:0;padding:0 12px;font-size:18px;border:2px solid #755850;border-radius:10px;outline:none;transition:all .4s ease}
+#toggle-filtro:checked~#filtro-input{max-height:50px;opacity:1;margin-top:15px;padding:8px 12px}
 
-.carrito {
-  position: absolute;
-  top: 10px;
-  right: 10px; 
-  transform: translateX(-50%);
-  cursor: pointer;
-  border-radius: 50px
+.item{background:#b48a7e;border-radius:30px;padding:6px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,.5);transition:transform .3s;transform:scale(.95);transform-origin:center}
+.item:hover{transform:scale(1.02)}
+.item h3 a{font-size:32px;font-style:italic;color:#faf2e1;text-decoration:none;cursor:pointer;transition:color .3s}
+.item h3 a:hover{color:#34241f}
+.item p{font-size:22px;color:#faf2e1;font-weight:700;margin-bottom:10px}
+.item button{background:#34241f;color:#faf2e1;border:none;padding:8px 24px;font-size:15px;border-radius:10px;cursor:pointer;transition:background-color .3s ease}
+.item button:hover{background:#6a534d}
+.item img{display:block;width:80%;height:auto;max-height:300px;margin:0 auto 10px;border-radius:12px}
 
-}
+.Contacto{width:100%;background:#755850;margin-top:20vh;padding:50px}
+.Contacto form {display:flex;flex-direction:column;align-items:center;gap:20px;max-width:600px;margin:0 auto;border-radius:15px}
+.Contacto label {color:#faf2e1;font-size:20px;align-self:center}
+.Contacto input, .Contacto textarea {width:40%;padding:10px;border:2px solid #faf2e1;border-radius:10px;font-size:18px;outline:none;resize:none}
+.Contacto button {background:#34241f;font-style: italic;color:#faf2e1;border:none;padding:10px 30px;font-size:20px;border-radius:10px;cursor:pointer;transition:background-color .3s ease}
+.Contacto button:hover {background:#6a534d}
+.Contacto p{color:#faf2e1;font-size:30px;text-align:center;max-width:800px;margin:0 auto;line-height:1.6;animation:aparecer 4s ease-in-out}
+.Contacto h2{color:#faf2e1;font-size:50px;text-align:center;margin-bottom:50px;animation:aparecer 4s ease-in-out}
 
-.logo {
-  width: 400px;
-  height: auto;
-  position: absolute;
-  top: -55px; 
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-
-.presentation h1 {
-  position: absolute;
-  top: 43%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  font-family: "Bodoni MT", serif;
-  font-size: 100px; 
-  margin: 0;
-  color: #b48a7e;
-  z-index: 100; 
-  width: 100%;
-    animation: aparecer 1.5s ease-in-out;
-
-}   
-
-
-.presentation h2 {
-  position: absolute;
-  top: 52%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  font-size: 35px; 
-  margin: 0;
-  color: #b48a7e;
-  z-index: 100; 
-  width: 100%;
-  animation: aparecer 2s ease-in-out;
-}
-
-.presentation {
-  text-align: center;
-  padding-top: 150px;
-
-  
-}
-
-.ghost-main {
-  width: 1100px;
-  margin: -120px auto;
-  display: flex;
-}
-  
-.quienes-somos {
-  width: 100%;
-  background-color: #755850;
-  margin-top: 20vh;
-  padding: 50px;
-
-}
-
-.quienes-somos h2 {
-  color: #faf2e1;
-  font-size: 50px;
-  text-align: center;
-  margin-bottom: 50px;
-
-  animation: aparecer 4s ease-in-out
-}
-
-.quienes-somos p {
-  color: #faf2e1;
-  font-size: 30px;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-  line-height: 1.6;
-
-  animation: aparecer 4s ease-in-out
-}
-
-/*aside {
-  width: 200px;
-
-}*/
-
-main {
-  display: flex;
-  flex-direction: row;
-  padding: 20px;
-  min-height: 70vh;
-
-}
-
-.articulos {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 28px;
-  padding: 20px;
-  flex-grow: 1;
-  
-}
-
-.articles { 
-  color: #755850;
-  font-size: 50px;
-  text-align: center;
-  margin-bottom: 50px;
-margin-top: 90px; } 
-
-.articles button {
-  
-  background-color: #755850;
-  color: #faf2e1; border: none;
-  padding: 10px 10px; font-size: 25px; font-style: italic;
-  border-radius: 10px; cursor: pointer;
-  transition: background-color 0.3s ease; } 
-      
-.articles button:hover
-      
-{ background-color: #b48a7e; }
-
-
-
-.btn-filtrar {
-  background-color: #755850;
-  color: #faf2e1;
-  border: none;
-  padding: 10px 20px;
-  font-size: 25px;
-  font-style: italic;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: inline-block;
-  margin-top: 10px;
-}
-
-.btn-filtrar:hover {
-  background-color: #b48a7e;
-}
-
-#filtro-input {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  margin-top: 0;
-  padding: 0 12px;
-  font-size: 18px;
-  border: 2px solid #755850;
-  border-radius: 10px;
-  outline: none;
-  transition: all 0.4s ease;
-}
-
-#toggle-filtro:checked ~ #filtro-input {
-  max-height: 50px;
-  opacity: 1;
-  margin-top: 15px;
-  padding: 8px 12px;
-}
-
-.item {
-  background-color: #b48a7e;
-  border-radius: 30px;
-  padding: 6px;
-  text-align: center;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s;
-  transform: scale(0.95);
-  transform-origin: center;
-  
-}
-
-.item:hover {
-  transform: scale(1.02);
-}
-
-.item h3 a {
-  font-size: 32px;
-  font-style: italic;
-  color: #faf2e1;       
-  text-decoration: none;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.item h3 a:hover {
-  color: #34241f;
-}
-
-.item p {
-  font-size: 22px;
-  color: #faf2e1;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.item button {
-  background-color: #34241f;
-  color: #faf2e1;
-  border: none;
-  padding: 8px 24px;
-  font-size: 15px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.item button:hover {
-background-color: #6a534d;
-}
-
-.item img {
-  display: block;
-  width: 80%;
-  height: auto;
-  max-height: 300px;
-  margin: 0 auto 10px;
-  border-radius: 12px;
-}
-
-/* AJUSTES DE CELU*/
+.footer{background:#272727;text-align:center;padding: 50px 0;color:#faf2e1;font-size:20px;}
+.footer p{margin:5px 0}
+.footer a{color:#faf2e1;text-decoration:none}
+.footer a:hover{text-decoration:underline}  
 
 /* Tablet */
-@media (max-width: 1024px) {
-  .logo,
-  .ghost-main {
-    display: none;
-  }
-
-  nav ul {
-    gap: 30px;
-  }
-
-  nav a {
-    font-size: 22px;
-  }
-
-  .presentation h1 {
-    position: static;
-    transform: none;
-    margin: 0;
-    font-size: 70px;
-    text-align: center;
-  }
-
-  .presentation h2 {
-    position: static;
-    transform: none;
-    margin-top: 10px;
-    font-size: 32px;
-    text-align: center;
-  }
-
-  .presentation {
-    padding-top: 50px;
-  }
-
-  .articulos {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    justify-items: center;
-  }
-
-  .item {
-    transform: scale(0.9);
-    max-width: 320px;
-    padding: 8px;
-  }
-
-  .item h3 a {
-    font-size: 26px;
-  }
-
-  .item p {
-    font-size: 18px;
-  }
-
-  .item button {
-    font-size: 14px;
-    padding: 8px 18px;
-  }
-
-  .item:hover {
-    transform: scale(0.98);
-  }
-
-  .item img {
-    width: 85%;
-    max-height: 220px;
-    margin-bottom: 8px;
-  }
+@media (max-width:1024px){
+  .logo,.ghost-main{display:none}
+  nav ul{gap:30px}
+  nav a{font-size:22px}
+  .presentation{padding-top:50px}
+  .presentation h1,.presentation h2{position:static;transform:none;text-align:center;width:auto}
+  .presentation h1{margin:0;font-size:70px}
+  .presentation h2{margin-top:10px;font-size:32px}
+  .articulos{grid-template-columns:repeat(2,1fr);gap:16px;justify-items:center}
+  .item{transform:scale(.9);max-width:320px;padding:8px}
+  .item h3 a{font-size:26px}
+  .item p{font-size:18px}
+  .item button{font-size:14px;padding:8px 18px}
+  .item:hover{transform:scale(.98)}
+  .item img{width:85%;max-height:220px;margin-bottom:8px}
 }
 
-/* celularr */
-@media (max-width: 768px) {
-  .logo,
-  .ghost-main {
-    display: none;
-  }
-
-  nav {
-    height: auto;
-    padding: 10px;
-    text-align: center;
-  }
-
-  .nav-left, 
-  .nav-right {
-    position: static;
-    transform: none;
-    margin: 10px 0;
-  }
-
-  nav ul {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .presentation h1 {
-    position: static;
-    transform: none;
-    margin: 0;
-    font-size: 50px;
-    text-align: center;
-  }
-
-  .presentation h2 {
-    position: static;
-    transform: none;
-    margin-top: 8px;
-    font-size: 26px;
-    text-align: center;
-  }
-
-  .presentation {
-    padding-top: 40px;
-  }
-
-  .quienes-somos {
-    padding: 20px;
-    margin-top: 10vh;
-  }
-
-  .quienes-somos h2 {
-    font-size: 28px;
-  }
-
-  .quienes-somos p {
-    font-size: 18px;
-  }
-
-  .articulos {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    justify-items: center;
-  }
-
-  .item {
-    padding: 8px;
-    transform: scale(0.85);
-    max-width: 300px;
-  }
-
-  .item h3 a {
-    font-size: 20px;
-  }
-
-  .item p {
-    font-size: 14px;
-  }
-
-  .item button {
-    font-size: 13px;
-    padding: 6px 16px;
-  }
-
-  .item:hover {
-    transform: scale(0.96);
-  }
-
-  .item img {
-    width: 80%;
-    max-height: 180px;
-    margin-bottom: 6px;
-  }
-
-  .articles {
-    font-size: 28px;
-    margin-top: 40px;
-  }
-
-  .articles button {
-    font-size: 16px;
-    padding: 6px 12px;
-  }
+/* Celular */
+@media (max-width:768px){
+  .logo,.ghost-main{display:none}
+  nav{height:auto;padding:10px;text-align:center}
+  .nav-left,.nav-right{position:static;transform:none;margin:10px 0;height:auto;line-height:normal}
+  nav ul{flex-direction:column;gap:15px}
+  .presentation{padding-top:40px}
+  .presentation h1,.presentation h2{position:static;transform:none;text-align:center;width:auto}
+  .presentation h1{margin:0;font-size:50px}
+  .presentation h2{margin-top:8px;font-size:26px}
+  .quienes-somos{padding:20px;margin-top:10vh}
+  .quienes-somos h2{font-size:28px}
+  .quienes-somos p{font-size:18px}
+  .articulos{grid-template-columns:1fr;gap:12px;justify-items:center}
+  .item{padding:8px;transform:scale(.85);max-width:300px}
+  .item h3 a{font-size:20px}
+  .item p{font-size:14px}
+  .item button{font-size:13px;padding:6px 16px}
+  .item:hover{transform:scale(.96)}
+  .item img{width:80%;max-height:180px;margin-bottom:6px}
+  .articles{font-size:28px;margin-top:40px}
 }

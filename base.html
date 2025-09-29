@@ -19,7 +19,7 @@
         <div class="nav-right">
             <ul>
                 <li><a href="#articles">Artículos</a></li>
-                <li><a href="#contact">Contacto</a></li>
+                <li><a href="#Contacto">Contacto</a></li>
             </ul>
         </div>
 
@@ -140,10 +140,34 @@
       <button>Añadir al carrito</button>
     </div>
   </section>
+
 </main>
 
+ <section class="Contacto" id="Contacto">
+    <h2>Contacto</h2>
+    <form action="mailto:tu_correo@example.com" method="post" enctype="text/plain">
+      <label for="name">Nombre:</label>
+      <input type="text" id="name" name="name" required>
 
+      <label for="email">Correo Electrónico:</label>
+      <input type="email" id="email" name="email" required>
 
-    <hr>
+      <label for="message">Dejanos tu consulta:</label>
+      <textarea id="message" name="message" rows="5" cols="50" required></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <footer class="footer">
+    
+    <p>&copy; 2023 Tu Tienda de Libros. Todos los derechos reservados.</p>
+    <p>Contacto: tu_correo@example.com</p>
+    <p>Síguenos en nuestras redes sociales: 
+      <a href="#">Facebook</a> | 
+      <a href="#">Twitter</a> | 
+      <a href="#">Instagram</a>
+    </p>
+  </footer>
 </body>
 </html>
