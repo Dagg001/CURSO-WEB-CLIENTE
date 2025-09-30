@@ -35,7 +35,9 @@ nav a {
   text-decoration: underline; 
 }
 
-.carrito{position:absolute;top:10px;right:10px;transform:translateX(-50%);cursor:pointer;border-radius:50px}
+.carrito{position:absolute;right: 400px;top: -5px;transform:translateX(-50%);cursor:pointer;border-radius:50px;background-color:#b48a7e;transition:background-color 0.3s ease}
+
+.carrito:hover{background-color:#755850}
 
 .vol_inicio { 
   position: absolute; 
@@ -52,7 +54,6 @@ nav a {
 .vol_inicio:hover { 
   background-color: #755850; 
 }
-
 
 header { 
   position: relative; 
@@ -179,10 +180,10 @@ h2 {
   transform: translateY(1px);
 }
 
-/* Responsive simple */
+/* celu responsive */
 @media (max-width: 900px) {
   .articulo1 {
-    grid-template-columns: 1fr; /* imagen arriba, contenido debajo */
+    grid-template-columns: 1fr; 
     gap: 14px 0;
     margin: 24px 12px;
     padding: 16px;
@@ -208,5 +209,67 @@ h2 {
   }
   nav a {
     font-size: 22px;
+  }
+
+  .carrito {
+    position: fixed;
+    top: 800px;
+    right: 16px;
+    width: 60px;
+    height: 70px;
+    background-color: #b48a7e;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  .carrito img {
+    width: 80px;
+    height: auto;
+  }
+}
+
+/* tablet responsive */
+@media (max-width: 1200px) and (min-width: 901px) {
+  .articulo1 {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 18px;
+    gap: 12px 0;
+  }
+  .articulo1 img {
+    max-width: 420px;
+  }
+  .articulo1 h3 {
+    font-size: 30px;
+  }
+  .articulo1 p {
+    font-size: 16px;
+    max-width: 600px;
+  }
+  .logo {
+    width: 300px;
+    top: -80px;
+  }
+  nav a {
+    font-size: 26px;
+  }
+  .carrito {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    background-color: #b48a7e;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  .carrito img {
+    width: 40px;
+    height: auto;
   }
 }

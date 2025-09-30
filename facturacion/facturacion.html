@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Compra</title>
+    <link rel="stylesheet" href="css.facturacion/factura.css">
+</head>
+
+<body>
+<nav>
+        <div class="vol">
+            <ul>
+                <li><a onclick="window.history.back()" href="#">Regresar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <div class="logo-container">
+            <img class="logo" src="../img/logo_z.jpg" alt="logo">
+        </div>
+
+  <h2>Formulario de Compra</h2>
+  <form action="#" method="post">
+    <fieldset>
+      <legend>Datos del Comprador</legend>
+      <label for="nombre">Nombre completo:</label>
+      <input type="text" id="nombre" name="nombre" required><br><br>
+
+      <label for="email">Correo electrónico:</label>
+      <input type="email" id="email" name="email" required><br><br>
+
+      <label for="direccion">Dirección de envío:</label>
+      <input type="text" id="direccion" name="direccion" required><br><br>
+
+      <label for="telefono">Teléfono:</label>
+      <input type="tel" id="telefono" name="telefono" required><br><br>
+    </fieldset>
+
+    <fieldset>
+      <legend>Datos de la Tarjeta</legend>
+      <label for="tarjeta">Número de tarjeta:</label>
+      <input type="text" id="tarjeta" name="tarjeta" maxlength="16" required><br><br>
+
+      <label for="nombre_tarjeta">Nombre en la tarjeta:</label>
+      <input type="text" id="nombre_tarjeta" name="nombre_tarjeta" required><br><br>
+
+      <label for="expiracion">Fecha de expiración:</label>
+      <input type="month" id="expiracion" name="expiracion" required><br><br>
+
+      <label for="cvv">CVV:</label>
+      <input type="password" id="cvv" name="cvv" maxlength="4" required><br><br>
+    </fieldset>
+
+<fieldset>
+  <legend>Artículo</legend>
+  <label for="articulo">Nombre del artículo:</label>
+  <input type="text" id="articulo" name="articulo" value="El libro de los hechizos" readonly><br><br>
+  <h3>Total: $29.99</h3>
+</fieldset>
+
+    <button type="submit">Realizar compra</button>
+  </form>
+
+</header>
+  
+   <footer class="footer">
+    
+    <p>&copy; 2023 Tu Tienda de Libros. Todos los derechos reservados.</p>
+    <p>Contacto: tu_correo@example.com</p>
+    <p>Síguenos en nuestras redes sociales: 
+      <a href="#">Facebook</a> | 
+      <a href="#">Twitter</a> | 
+      <a href="#">Instagram</a>
+    </p>
+  </footer>
+</body>
+</html>
