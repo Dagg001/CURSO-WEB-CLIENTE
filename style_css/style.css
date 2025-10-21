@@ -1,110 +1,1240 @@
-html{scroll-behavior:smooth}
+/*
+================================================================
+ ARCHIVO CSS UNIFICADO - ZERYMNOR 
+================================================================
+ ÍNDICE:
+ 1. Variables Globales (Colores y Fuentes)
+ 2. Estilos Globales (Reset, Body, Footer)
+ 3. Layout Principal (base.html)
+    - Nav y Header Principal
+    - Contenido Principal (Presentación, Quiénes Somos, Artículos)
+ 4. Layout Secundario (Resto de páginas)
+    - Nav y Header Secundario
+ 5. Estilos Específicos de Páginas
+    - Página Artículo (ART1.html)
+    - Página Carrito (carrito.html)
+    - Página Facturación (facturacion.html)
+    - Página Compra Lista (compra_lista.html)
+ 6. Media Queries (Estilos Responsivos)
+    - Tablet Grande (art.css)
+    - Tablet (General)
+    - Tablet Pequeña (art.css)
+    - Celular (General)
+================================================================
+*/
 
-@keyframes aparecer{from{opacity:0}to{opacity:1}}
-
-*{margin:0;padding:0;box-sizing:border-box}
-
-body{background:#faf2e1;animation:aparecer 1s ease-in-out}
-
-nav{background:#b48a7e;height:100px}
-nav ul{list-style:none;display:flex;gap:80px}
-nav ul li{border-radius:15px}
-nav a{text-decoration:none;color:#faf2e1;font-weight:700;font-size:32px}
-
-.nav-left,.nav-right{position:absolute;top:30px;height:100%;white-space:nowrap;line-height:50px}
-.nav-left{right:75%;transform:translateX(50%)}
-.nav-right{left:50%;transform:translateX(50%)}
-
-.nav-left ul li,.nav-right ul li,.carrito{background:#b48a7e;transition:background-color .3s ease}
-.nav-left ul li:hover,.nav-right ul li:hover,.carrito:hover{background:#755850}
-
-.carrito{position:absolute;top:10px;right:10px;transform:translateX(-50%);cursor:pointer;border-radius:50px}
-
-.logo{width:400px;height:auto;position:absolute;top:-55px;left:50%;transform:translateX(-50%);z-index:1}
-
-.presentation{text-align:center;padding-top:150px}
-.presentation h1,.presentation h2{position:absolute;left:50%;transform:translate(-50%,-50%);text-align:center;margin:0;color:#b48a7e;z-index:100;width:100%}
-.presentation h1{top:43%;font-family:"Bodoni MT",serif;font-size:100px;animation:aparecer 1.5s ease-in-out}
-.presentation h2{top:52%;font-size:35px;animation:aparecer 2s ease-in-out}
-
-.ghost-main{width:1100px;margin:-120px auto;display:block}
-
-.quienes-somos{width:100%;background:#755850;margin-top:20vh;padding:50px}
-.quienes-somos h2{color:#faf2e1;font-size:50px;text-align:center;margin-bottom:50px;animation:aparecer 4s ease-in-out}
-.quienes-somos p{color:#faf2e1;font-size:30px;text-align:center;max-width:800px;margin:0 auto;line-height:1.6;animation:aparecer 4s ease-in-out}
-
-main{display:flex;flex-direction:row;padding:20px;min-height:70vh}
-
-.articulos{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;padding:20px;flex-grow:1}
-
-.articles{color:#755850;font-size:50px;text-align:center;margin:90px 0 50px}
-
-.btn-filtrar{background:#755850;color:#faf2e1;border:none;padding:10px 20px;font-size:25px;font-style:italic;border-radius:10px;cursor:pointer;transition:background-color .3s ease;display:inline-block;margin-top:10px}
-.btn-filtrar:hover{background:#b48a7e}
-
-#filtro-input{max-height:0;opacity:0;overflow:hidden;margin-top:0;padding:0 12px;font-size:18px;border:2px solid #755850;border-radius:10px;outline:none;transition:all .4s ease}
-#toggle-filtro:checked~#filtro-input{max-height:50px;opacity:1;margin-top:15px;padding:8px 12px}
-
-.item{background:#b48a7e;border-radius:30px;padding:6px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,.5);transition:transform .3s;transform:scale(.95);transform-origin:center}
-.item:hover{transform:scale(1.02)}
-.item h3 a{font-size:32px;font-style:italic;color:#faf2e1;text-decoration:none;cursor:pointer;transition:color .3s}
-.item h3 a:hover{color:#34241f}
-.item p{font-size:22px;color:#faf2e1;font-weight:700;margin-bottom:10px}
-.item button{background:#34241f;color:#faf2e1;border:none;padding:8px 24px;font-size:15px;border-radius:10px;cursor:pointer;transition:background-color .3s ease}
-.item button:hover{background:#6a534d}
-.item img{display:block;width:80%;height:auto;max-height:300px;margin:0 auto 10px;border-radius:12px}
-
-.Contacto{width:100%;background:#755850;margin-top:20vh;padding:50px}
-.Contacto form {display:flex;flex-direction:column;align-items:center;gap:20px;max-width:600px;margin:0 auto;border-radius:15px}
-.Contacto label {color:#faf2e1;font-size:20px;align-self:center}
-.Contacto input, .Contacto textarea {width:40%;padding:10px;border:2px solid #faf2e1;border-radius:10px;font-size:18px;outline:none;resize:none}
-.Contacto button {background:#34241f;font-style: italic;color:#faf2e1;border:none;padding:10px 30px;font-size:20px;border-radius:10px;cursor:pointer;transition:background-color .3s ease}
-.Contacto button:hover {background:#6a534d}
-.Contacto p{color:#faf2e1;font-size:30px;text-align:center;max-width:800px;margin:0 auto;line-height:1.6;animation:aparecer 4s ease-in-out}
-.Contacto h2{color:#faf2e1;font-size:50px;text-align:center;margin-bottom:50px;animation:aparecer 4s ease-in-out}
-
-.footer{background:#272727;text-align:center;padding: 50px 0;color:#faf2e1;font-size:20px;}
-.footer p{margin:5px 0}
-.footer a{color:#faf2e1;text-decoration:none}
-.footer a:hover{text-decoration:underline}  
-
-/* Tablet */
-@media (max-width:1024px){
-  .logo,.ghost-main{display:none}
-  nav ul{gap:30px}
-  nav a{font-size:22px}
-  .presentation{padding-top:50px}
-  .presentation h1,.presentation h2{position:static;transform:none;text-align:center;width:auto}
-  .presentation h1{margin:0;font-size:70px}
-  .presentation h2{margin-top:10px;font-size:32px}
-  .articulos{grid-template-columns:repeat(2,1fr);gap:16px;justify-items:center}
-  .item{transform:scale(.9);max-width:320px;padding:8px}
-  .item h3 a{font-size:26px}
-  .item p{font-size:18px}
-  .item button{font-size:14px;padding:8px 18px}
-  .item:hover{transform:scale(.98)}
-  .item img{width:85%;max-height:220px;margin-bottom:8px}
+/* --------------------------------
+ 1. Variables Globales 
+--------------------------------
+*/
+:root {
+  --color-fondo: #faf2e1;
+  --color-primario: #b48a7e;
+  --color-primario-oscuro: #755850;
+  --color-texto-oscuro: #34241f;
+  --color-texto-oscuro-hover: #6a534d;
+  --color-texto-claro: #faf2e1;
+  --color-footer: #272727;
+  --font-titulos: "Bodoni MT", serif;
 }
 
-/* Celular */
-@media (max-width:768px){
-  .logo,.ghost-main{display:none}
-  nav{height:auto;padding:10px;text-align:center}
-  .nav-left,.nav-right{position:static;transform:none;margin:10px 0;height:auto;line-height:normal}
-  nav ul{flex-direction:column;gap:15px}
-  .presentation{padding-top:40px}
-  .presentation h1,.presentation h2{position:static;transform:none;text-align:center;width:auto}
-  .presentation h1{margin:0;font-size:50px}
-  .presentation h2{margin-top:8px;font-size:26px}
-  .quienes-somos{padding:20px;margin-top:10vh}
-  .quienes-somos h2{font-size:28px}
-  .quienes-somos p{font-size:18px}
-  .articulos{grid-template-columns:1fr;gap:12px;justify-items:center}
-  .item{padding:8px;transform:scale(.85);max-width:300px}
-  .item h3 a{font-size:20px}
-  .item p{font-size:14px}
-  .item button{font-size:13px;padding:6px 16px}
-  .item:hover{transform:scale(.96)}
-  .item img{width:80%;max-height:180px;margin-bottom:6px}
-  .articles{font-size:28px;margin-top:40px}
+/* --------------------------------
+ 2. Estilos Globales
+--------------------------------
+*/
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes aparecer {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-fondo);
+  width: 100%;
+  animation: aparecer 1s ease-in-out;
+}
+
+nav, header, main, footer {
+  width: 100%;
+}
+
+/* Footer Unificado */
+.footer {
+  background: var(--color-footer);
+  text-align: center;
+  padding: 50px 0;
+  color: var(--color-texto-claro);
+  font-size: 20px;
+  
+  margin-top: auto;
+}
+.footer p {
+  margin: 5px 0;
+}
+.footer a {
+  color: var(--color-texto-claro);
+  text-decoration: none;
+}
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------
+ 3. Layout Principal (base.html)
+--------------------------------
+*/
+
+/* --- Nav y Header Principal --- */
+.pagina-principal nav {
+  background: var(--color-primario);
+  height: 100px;
+}
+.pagina-principal nav ul {
+  list-style: none;
+  display: flex;
+  gap: 80px;
+}
+.pagina-principal nav ul li {
+  border-radius: 15px;
+}
+.pagina-principal nav a {
+  text-decoration: none;
+  color: var(--color-texto-claro);
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.pagina-principal .nav-left,
+.pagina-principal .nav-right {
+  position: absolute;
+  top: 30px;
+  height: 100%;
+  white-space: nowrap;
+  line-height: 50px;
+}
+.pagina-principal .nav-left {
+  right: 75%;
+  transform: translateX(50%);
+}
+.pagina-principal .nav-right {
+  left: 50%;
+  transform: translateX(50%);
+}
+
+.pagina-principal .nav-left ul li,
+.pagina-principal .nav-right ul li,
+.pagina-principal .carrito {
+  background: var(--color-primario);
+  transition: background-color .3s ease;
+}
+.pagina-principal .nav-left ul li:hover,
+.pagina-principal .nav-right ul li:hover,
+.pagina-principal .carrito:hover {
+  background: var(--color-primario-oscuro);
+}
+
+.pagina-principal .carrito {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transform: translateX(-50%);
+  cursor: pointer;
+  border-radius: 50px;
+}
+
+/* Logo de la página principal */
+.pagina-principal .logo {
+  width: 400px;
+  height: auto;
+  position: absolute;
+  top: -55px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* --- Contenido Principal --- */
+.pagina-principal .presentation {
+  text-align: center;
+  padding-top: 150px;
+}
+.pagina-principal .presentation h1,
+.pagina-principal .presentation h2 {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  margin: 0;
+  color: var(--color-primario);
+  z-index: 100;
+  width: 100%;
+}
+.pagina-principal .presentation h1 {
+  top: 43%;
+  font-family: var(--font-titulos);
+  font-size: 100px;
+  animation: aparecer 1.5s ease-in-out;
+}
+.pagina-principal .presentation h2 {
+  top: 52%;
+  font-size: 35px;
+  animation: aparecer 2s ease-in-out;
+}
+
+.pagina-principal .ghost-main {
+  width: 1100px;
+  margin: -120px auto;
+  display: block;
+}
+
+.pagina-principal .quienes-somos {
+  width: 100%;
+  background: var(--color-primario-oscuro);
+  margin-top: 20vh;
+  padding: 50px;
+}
+.pagina-principal .quienes-somos h2 {
+  color: var(--color-texto-claro);
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 50px;
+  animation: aparecer 4s ease-in-out;
+}
+.pagina-principal .quienes-somos p {
+  color: var(--color-texto-claro);
+  font-size: 30px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  animation: aparecer 4s ease-in-out;
+}
+
+.pagina-principal main {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  min-height: 70vh;
+}
+
+/* Grilla de artículos de la pág. principal */
+.pagina-principal .articulos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.pagina-principal .articles { /* Título H2 "Artículos Destacados" */
+  color: var(--color-primario-oscuro);
+  font-size: 50px;
+  text-align: center;
+  margin: 90px 0 50px;
+}
+
+/* Filtro */
+.pagina-principal .btn-filtrar {
+  background: var(--color-primario-oscuro);
+  color: var(--color-texto-claro);
+  border: none;
+  padding: 10px 20px;
+  font-size: 25px;
+  font-style: italic;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color .3s ease;
+  display: inline-block;
+  margin-top: 10px;
+}
+.pagina-principal .btn-filtrar:hover {
+  background: var(--color-primario);
+}
+.pagina-principal #filtro-input {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-top: 0;
+  padding: 0 12px;
+  font-size: 18px;
+  border: 2px solid var(--color-primario-oscuro);
+  border-radius: 10px;
+  outline: none;
+  transition: all .4s ease;
+}
+.pagina-principal #toggle-filtro:checked ~ #filtro-input {
+  max-height: 50px;
+  opacity: 1;
+  margin-top: 15px;
+  padding: 8px 12px;
+}
+
+/* Item individual en la grilla principal */
+.pagina-principal .item {
+  background: var(--color-primario);
+  border-radius: 30px;
+  padding: 6px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .5);
+  transition: transform .3s;
+  transform: scale(.95);
+  transform-origin: center;
+}
+.pagina-principal .item:hover {
+  transform: scale(1.02);
+}
+.pagina-principal .item h3 a {
+  font-size: 32px;
+  font-style: italic;
+  color: var(--color-texto-claro);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .3s;
+}
+.pagina-principal .item h3 a:hover {
+  color: var(--color-texto-oscuro);
+}
+.pagina-principal .item p {
+  font-size: 22px;
+  color: var(--color-texto-claro);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.pagina-principal .item button {
+  background: var(--color-texto-oscuro);
+  color: var(--color-texto-claro);
+  border: none;
+  padding: 8px 24px;
+  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color .3s ease;
+}
+.pagina-principal .item button:hover {
+  background: var(--color-texto-oscuro-hover);
+}
+.pagina-principal .item img {
+  display: block;
+  width: 80%;
+  height: auto;
+  max-height: 300px;
+  margin: 0 auto 10px;
+  border-radius: 12px;
+}
+
+/* Formulario de Contacto */
+.pagina-principal .Contacto {
+  width: 100%;
+  background: var(--color-primario-oscuro);
+  margin-top: 20vh;
+  padding: 50px;
+}
+.pagina-principal .Contacto form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 15px;
+}
+.pagina-principal .Contacto label {
+  color: var(--color-texto-claro);
+  font-size: 20px;
+  align-self: center;
+}
+.pagina-principal .Contacto input,
+.pagina-principal .Contacto textarea {
+  width: 40%;
+  padding: 10px;
+  border: 2px solid var(--color-texto-claro);
+  border-radius: 10px;
+  font-size: 18px;
+  outline: none;
+  resize: none;
+}
+.pagina-principal .Contacto button {
+  background: var(--color-texto-oscuro);
+  font-style: italic;
+  color: var(--color-texto-claro);
+  border: none;
+  padding: 10px 30px;
+  font-size: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color .3s ease;
+}
+.pagina-principal .Contacto button:hover {
+  background: var(--color-texto-oscuro-hover);
+}
+.pagina-principal .Contacto h2 {
+  color: var(--color-texto-claro);
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 50px;
+  animation: aparecer 4s ease-in-out;
+}
+
+/* --------------------------------
+ 4. Layout Secundario (Resto de páginas)
+--------------------------------
+*/
+
+.pagina-secundaria { 
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.pagina-secundaria nav {
+  background-color: var(--color-primario);
+  height: 100px;
+  top: 0;
+  left: 0;
+  align-items: center;
+}
+.pagina-secundaria nav ul {
+  list-style: none;
+  display: flex;
+  gap: 80px;
+  height: 7%;
+}
+.pagina-secundaria nav a {
+  text-decoration: none;
+  color: var(--color-texto-claro);
+  font-weight: bold;
+  font-size: 32px;
+  text-decoration: underline;
+}
+
+/* Botón "Volver" */
+.pagina-secundaria .vol_inicio,
+.pagina-secundaria .vol {
+  position: absolute;
+  top: 30px;
+  right: 75%;
+  transform: translateX(50%);
+  white-space: nowrap;
+  line-height: 50px;
+  border-radius: 15px;
+  background-color: var(--color-primario);
+  transition: background-color 0.3s ease;
+}
+.pagina-secundaria .vol_inicio:hover,
+.pagina-secundaria .vol:hover {
+  background-color: var(--color-primario-oscuro);
+}
+
+/* Header secundario (base) */
+.pagina-secundaria header {
+  position: relative;
+  height: 200px; /* Altura base, art1 la sobreescribe */
+}
+
+/* Logo secundario (base) */
+.pagina-secundaria .logo {
+  width: 300px;
+  position: absolute;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* Título H2 de páginas secundarias */
+.pagina-secundaria h2 {
+  text-align: center;
+  color: var(--color-texto-oscuro);
+  font-family: var(--font-titulos);
+  font-size: 52px;
+  margin: 140px auto 20px;
+}
+
+/* --------------------------------
+ 5. Estilos Específicos de Páginas
+--------------------------------
+*/
+
+/* --- Página Artículo (ART1.html) --- */
+.pagina-articulo header {
+  height: 200px; 
+}
+/* Logo específico de la página de artículo (Este es diferente y está bien) */
+.pagina-articulo .logo {
+  width: 400px;
+  top: -150px;
+  z-index: 2;
+}
+/* Carrito específico de la página de artículo */
+.pagina-articulo .carrito {
+  position: absolute;
+  right: 400px;
+  top: -5px;
+  transform: translateX(-50%);
+  cursor: pointer;
+  border-radius: 50px;
+  background-color: var(--color-primario);
+  transition: background-color 0.3s ease;
+}
+.pagina-articulo .carrito:hover {
+  background-color: var(--color-primario-oscuro);
+}
+
+.pagina-articulo .articulo1 {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px 0;
+  justify-items: center;
+  color: var(--color-texto-oscuro);
+}
+.pagina-articulo .articulo1 img {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  align-self: center;
+  justify-self: center;
+}
+.pagina-articulo .articulo1 h3,
+.pagina-articulo .articulo1 p,
+.pagina-articulo .articulo1 button {
+  justify-self: center;
+}
+.pagina-articulo .articulo1 h3 {
+  font-family: var(--font-titulos);
+  font-size: 36px;
+  line-height: 1.2;
+  margin: 12px 0 8px;
+  text-align: center;
+}
+.pagina-articulo .articulo1 p {
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 8px 0;
+  max-width: 760px;
+  text-align: center;
+}
+.pagina-articulo .articulo1 .precio {
+  font-size: 28px;
+  font-weight: 800;
+  color: #3b2621;
+  margin-top: 12px;
+}
+.pagina-articulo .articulo1 .stock {
+  color: #6b6b6b;
+  opacity: 0.85;
+  margin-top: 6px;
+}
+.pagina-articulo .articulo1 button {
+  appearance: none;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--color-texto-claro);
+  box-shadow: 0 3px 10px rgba(180, 138, 126, 0.35);
+  transition: transform 0.06s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  justify-self: center;
+  width: auto;
+}
+.pagina-articulo .articulo1 .btn-agregar {
+  background: var(--color-primario-oscuro);
+}
+.pagina-articulo .articulo1 .btn-agregar:hover {
+  background: #5f4741;
+}
+.pagina-articulo .articulo1 .btn-comprar {
+  background: var(--color-primario);
+}
+.pagina-articulo .articulo1 .btn-comprar:hover {
+  background: #a17669;
+}
+.pagina-articulo .articulo1 button + button {
+  margin-left: 12px;
+}
+.pagina-articulo .articulo1 button:active {
+  transform: translateY(1px);
+}
+
+
+/* --- Página Carrito (carrito.html) --- */
+/* Lista de artículos en el carrito */
+.pagina-secundaria .articulos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin: 50px;
+  justify-items: center;
+}
+.pagina-secundaria .articulos > * { /* Cada item del carrito */
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  width: 100%;
+  max-width: 900px;
+  background-color: var(--color-primario);
+  color: var(--color-texto-claro);
+  border-radius: 20px;
+  padding: 16px 16px 72px 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.pagina-secundaria .articulos img {
+  flex: 0 0 200px;
+  width: 200px;
+  height: auto;
+  border-radius: 12px;
+}
+.pagina-secundaria .articulos h3 {
+  font-size: 30px;
+  font-style: italic;
+  margin: 0 0 6px 0;
+}
+.pagina-secundaria .articulos p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 0 0 6px 0;
+}
+.pagina-secundaria .articulos #Precio {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-texto-oscuro);
+  margin-top: 120px;
+}
+.pagina-secundaria .articulos #cantidad-label {
+  position: absolute;
+  right: 250px;
+  top: 180px;
+  font-size: 20px;
+  color: var(--color-texto-claro);
+}
+.pagina-secundaria .articulos input[type=number] {
+  position: absolute;
+  right: 140px;
+  top: 170px;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-texto-oscuro);
+  background: var(--color-fondo);
+  border: 2px solid var(--color-primario-oscuro);
+  border-radius: 10px;
+  padding: 6px 10px;
+  width: 110px;
+  text-align: center;
+}
+.pagina-secundaria .articulos > * button {
+  position: absolute;
+  bottom: 16px;
+  background-color: var(--color-texto-oscuro);
+  color: var(--color-texto-claro);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  min-width: 140px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.pagina-secundaria .articulos > * button:hover {
+  background-color: var(--color-texto-oscuro-hover);
+}
+.pagina-secundaria .articulos > * button:last-of-type {
+  right: 16px;
+}
+.pagina-secundaria .articulos > * button:nth-last-of-type(2) {
+  right: 172px;
+}
+
+/* Total del Carrito */
+.pagina-secundaria .total {
+  position: static;
+  background: var(--color-primario-oscuro);
+  color: var(--color-texto-claro);
+  border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 900px;
+  margin: 16px auto 24px;
+  justify-content: flex-end;
+}
+.pagina-secundaria .total button {
+  background-color: var(--color-texto-oscuro);
+  color: var(--color-texto-claro);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  min-width: 140px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.pagina-secundaria .total button:hover {
+  background-color: var(--color-texto-oscuro-hover);
+}
+
+
+/* --- Página Facturación (facturacion.html) --- */
+.pagina-secundaria form {
+  background: var(--color-primario);
+  color: var(--color-texto-claro);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  padding: 32px 36px;
+  max-width: 500px;
+  width: 100%;
+  margin: 40px auto;
+  font-size: 18px;
+}
+.pagina-secundaria fieldset {
+  border: 2px solid var(--color-texto-claro);
+  border-radius: 12px;
+  margin-bottom: 22px;
+  padding: 18px 16px;
+}
+.pagina-secundaria legend {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--color-texto-oscuro);
+  padding: 0 8px;
+  font-family: var(--font-titulos);
+}
+.pagina-secundaria label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--color-texto-claro);
+}
+.pagina-secundaria input[type="text"],
+.pagina-secundaria input[type="email"],
+.pagina-secundaria input[type="tel"],
+.pagina-secundaria input[type="month"],
+.pagina-secundaria input[type="password"],
+.pagina-secundaria input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 14px;
+  border: 2px solid var(--color-primario-oscuro);
+  border-radius: 8px;
+  font-size: 18px;
+  background: var(--color-fondo);
+  color: var(--color-texto-oscuro);
+  font-family: inherit;
+}
+.pagina-secundaria button[type="submit"] {
+  background-color: var(--color-texto-oscuro);
+  color: var(--color-texto-claro);
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+.pagina-secundaria button[type="submit"]:hover {
+  background-color: var(--color-texto-oscuro-hover);
+}
+.pagina-secundaria form h3 { /* Total en formulario */
+  text-align: right;
+  color: var(--color-texto-oscuro);
+  font-size: 24px;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+/* --- Página Compra Lista (compra_lista.html) --- */
+.pagina-secundaria .formulario-compra { /* Es el <main> */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+.pagina-secundaria .formulario-compra section { /* Caja "Gracias" */
+  background: var(--color-primario);
+  color: var(--color-texto-claro);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  padding: 32px 36px;
+  max-width: 500px;
+  width: 100%;
+  margin: 40px auto;
+  font-size: 18px;
+  text-align: center;
+}
+.pagina-secundaria .formulario-compra h3 {
+  font-size: 28px;
+  margin-bottom: 18px;
+  color: var(--color-texto-oscuro);
+}
+.pagina-secundaria .formulario-compra p {
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+.pagina-secundaria .formulario-compra button {
+  background-color: var(--color-texto-oscuro);
+  color: var(--color-texto-claro);
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+.pagina-secundaria .formulario-compra button:hover {
+  background-color: var(--color-texto-oscuro-hover);
+}
+
+
+/* --------------------------------
+ 6. Media Queries (Responsivo)
+--------------------------------
+*/
+
+/* --- Tablet Grande (Específico de art.css) --- */
+@media (max-width: 1200px) and (min-width: 901px) {
+  .pagina-articulo .articulo1 {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 18px;
+    gap: 12px 0;
+  }
+  .pagina-articulo .articulo1 img {
+    max-width: 420px;
+  }
+  .pagina-articulo .articulo1 h3 {
+    font-size: 30px;
+  }
+  .pagina-articulo .articulo1 p {
+    font-size: 16px;
+    max-width: 600px;
+  }
+  .pagina-articulo .logo {
+    width: 300px;
+    top: -80px;
+  }
+  .pagina-articulo nav a {
+    font-size: 26px;
+  }
+  .pagina-articulo .carrito {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-primario);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+  .pagina-articulo .carrito img {
+    width: 40px;
+    height: auto;
+  }
+}
+
+/* --- Tablet (General) --- */
+@media (max-width: 1024px) {
+  /* Layout Principal */
+  .pagina-principal .logo,
+  .pagina-principal .ghost-main {
+    display: none;
+  }
+  .pagina-principal nav ul {
+    gap: 30px;
+  }
+  .pagina-principal nav a {
+    font-size: 22px;
+  }
+  .pagina-principal .presentation {
+    padding-top: 50px;
+  }
+  .pagina-principal .presentation h1,
+  .pagina-principal .presentation h2 {
+    position: static;
+    transform: none;
+    text-align: center;
+    width: auto;
+  }
+  .pagina-principal .presentation h1 {
+    margin: 0;
+    font-size: 70px;
+  }
+  .pagina-principal .presentation h2 {
+    margin-top: 10px;
+    font-size: 32px;
+  }
+  .pagina-principal .articulos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    justify-items: center;
+  }
+  .pagina-principal .item {
+    transform: scale(.9);
+    max-width: 320px;
+    padding: 8px;
+  }
+  .pagina-principal .item h3 a {
+    font-size: 26px;
+  }
+  .pagina-principal .item p {
+    font-size: 18px;
+  }
+  .pagina-principal .item button {
+    font-size: 14px;
+    padding: 8px 18px;
+  }
+  .pagina-principal .item:hover {
+    transform: scale(.98);
+  }
+  .pagina-principal .item img {
+    width: 85%;
+    max-height: 220px;
+    margin-bottom: 8px;
+  }
+
+  /* Layout Secundario */
+  .pagina-secundaria .logo {
+    display: none;
+  }
+  .pagina-secundaria nav ul {
+    gap: 30px;
+  }
+  .pagina-secundaria nav a {
+    font-size: 22px;
+  }
+  .pagina-secundaria h2 {
+    font-size: 40px;
+    margin-top: 40px;
+  }
+
+  /* Carrito */
+  .pagina-secundaria .total {
+    max-width: 860px;
+    margin: 14px auto 20px;
+    justify-content: space-between;
+  }
+  .pagina-secundaria .total button {
+    font-size: 15px;
+    min-width: 130px;
+    padding: 8px 16px;
+  }
+  .pagina-secundaria .articulos img {
+    flex-basis: 170px;
+    width: 170px;
+  }
+  .pagina-secundaria .articulos h3 {
+    font-size: 28px;
+  }
+  .pagina-secundaria .articulos p {
+    font-size: 17px;
+  }
+  .pagina-secundaria .articulos #precio {
+    font-size: 22px;
+  }
+  .pagina-secundaria .articulos input[type=number] {
+    font-size: 22px;
+    width: 100px;
+  }
+  .pagina-secundaria .articulos > * button {
+    font-size: 15px;
+    min-width: 130px;
+  }
+  
+  /* Facturación */
+  .pagina-secundaria form {
+    max-width: 420px;
+    padding: 24px 12px;
+    font-size: 16px;
+  }
+  .pagina-secundaria legend {
+    font-size: 18px;
+  }
+  .pagina-secundaria button[type="submit"] {
+    font-size: 17px;
+    padding: 10px 20px;
+  }
+
+  /* Compra Lista */
+  .pagina-secundaria .formulario-compra section {
+    max-width: 420px;
+    padding: 24px 12px;
+    font-size: 16px;
+  }
+  .pagina-secundaria .formulario-compra h3 {
+    font-size: 22px;
+  }
+  .pagina-secundaria .formulario-compra button {
+    font-size: 17px;
+    padding: 10px 20px;
+  }
+}
+
+/* --- Tablet Pequeña (Específico de art.css) --- */
+@media (max-width: 900px) {
+  .pagina-articulo .articulo1 {
+    grid-template-columns: 1fr;
+    gap: 14px 0;
+    margin: 24px 12px;
+    padding: 16px;
+    justify-items: center;
+  }
+  .pagina-articulo .articulo1 img {
+    grid-column: 1;
+    grid-row: auto;
+    align-self: center;
+    max-width: 100%;
+  }
+  .pagina-articulo .articulo1 h3,
+  .pagina-articulo .articulo1 p,
+  .pagina-articulo .articulo1 button {
+    grid-column: 1;
+  }
+  .pagina-articulo header {
+    height: 200px;
+  }
+  .pagina-articulo .logo {
+    width: 220px;
+    top: -35px;
+  }
+  .pagina-articulo nav a {
+    font-size: 22px;
+  }
+  .pagina-articulo .carrito {
+    position: fixed;
+    top: 800px; 
+    right: 16px;
+    width: 60px;
+    height: 70px;
+    background-color: var(--color-primario);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+  .pagina-articulo .carrito img {
+    width: 80px;
+    height: auto;
+  }
+}
+
+/* --- Celular (General) --- */
+@media (max-width: 768px) {
+  /* Layout Principal */
+  .pagina-principal .logo,
+  .pagina-principal .ghost-main {
+    display: none;
+  }
+  .pagina-principal nav {
+    height: auto;
+    padding: 10px;
+    text-align: center;
+  }
+  .pagina-principal .nav-left,
+  .pagina-principal .nav-right {
+    position: static;
+    transform: none;
+    margin: 10px 0;
+    height: auto;
+    line-height: normal;
+  }
+  .pagina-principal nav ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .pagina-principal .presentation {
+    padding-top: 40px;
+  }
+  .pagina-principal .presentation h1,
+  .pagina-principal .presentation h2 {
+    position: static;
+    transform: none;
+    text-align: center;
+    width: auto;
+  }
+  .pagina-principal .presentation h1 {
+    margin: 0;
+    font-size: 50px;
+  }
+  .pagina-principal .presentation h2 {
+    margin-top: 8px;
+    font-size: 26px;
+  }
+  .pagina-principal .quienes-somos {
+    padding: 20px;
+    margin-top: 10vh;
+  }
+  .pagina-principal .quienes-somos h2 {
+    font-size: 28px;
+  }
+  .pagina-principal .quienes-somos p {
+    font-size: 18px;
+  }
+  .pagina-principal .articulos {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    justify-items: center;
+  }
+  .pagina-principal .item {
+    padding: 8px;
+    transform: scale(.85);
+    max-width: 300px;
+  }
+  .pagina-principal .item h3 a {
+    font-size: 20px;
+  }
+  .pagina-principal .item p {
+    font-size: 14px;
+  }
+  .pagina-principal .item button {
+    font-size: 13px;
+    padding: 6px 16px;
+  }
+  .pagina-principal .item:hover {
+    transform: scale(.96);
+  }
+  .pagina-principal .item img {
+    width: 80%;
+    max-height: 180px;
+    margin-bottom: 6px;
+  }
+  .pagina-principal .articles {
+    font-size: 28px;
+    margin-top: 40px;
+  }
+
+  /* Layout Secundario */
+  .pagina-secundaria nav {
+    height: auto;
+    padding: 10px;
+    text-align: center;
+  }
+  .pagina-secundaria .vol_inicio,
+  .pagina-secundaria .vol {
+    position: static;
+    transform: none;
+    margin: 10px 0;
+  }
+  .pagina-secundaria nav ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .pagina-secundaria h2 {
+    font-size: 32px;
+    margin-top: 20px;
+  }
+
+  /* Carrito */
+  .pagina-secundaria .total {
+    max-width: none;
+    width: auto;
+    margin: 12px 4vw 18px;
+    justify-content: space-between;
+    padding: 10px 12px;
+  }
+  .pagina-secundaria .total button {
+    min-width: 120px;
+    font-size: 15px;
+    padding: 8px 14px;
+  }
+  .pagina-secundaria .articulos {
+    gap: 16px;
+    margin: 20px;
+  }
+  .pagina-secundaria .articulos > * {
+    display: block;
+    padding: 14px;
+  }
+  .pagina-secundaria .articulos img {
+    display: block;
+    margin: 0 auto 10px;
+    width: 65vw;
+    max-width: 280px;
+  }
+  .pagina-secundaria .articulos #cantidad-label,
+  .pagina-secundaria .articulos input[type=number],
+  .pagina-secundaria .articulos > * button {
+    position: static;
+  }
+  .pagina-secundaria .articulos #cantidad-label {
+    display: block;
+    text-align: right;
+    margin: 6px 0 4px;
+  }
+  .pagina-secundaria .articulos input[type=number] {
+    display: block;
+    margin-left: auto;
+  }
+  .pagina-secundaria .articulos > * button {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 8px;
+    float: right;
+  }
+  .pagina-secundaria .articulos > *::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  /* Facturación */
+  .pagina-secundaria form {
+    max-width: 98vw;
+    padding: 12px 4vw;
+    font-size: 15px;
+  }
+  .pagina-secundaria legend {
+    font-size: 16px;
+  }
+  .pagina-secundaria button[type="submit"] {
+    font-size: 15px;
+    padding: 8px 14px;
+  }
+
+  /* Compra Lista */
+  .pagina-secundaria .formulario-compra section {
+    max-width: 98vw;
+    padding: 12px 4vw;
+    font-size: 15px;
+  }
+  .pagina-secundaria .formulario-compra h3 {
+    font-size: 18px;
+  }
+  .pagina-secundaria .formulario-compra button {
+    font-size: 15px;
+    padding: 8px 14px;
+  }
 }
