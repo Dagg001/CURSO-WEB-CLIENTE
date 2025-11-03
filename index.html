@@ -57,44 +57,76 @@
 <section class="articles" id="articles">
   <h2>Artículos Destacados</h2>
 
-
-<input type="checkbox" id="toggle-filtro" hidden>
-<label for="toggle-filtro" class="btn-filtrar">Filtrar</label>
-<input type="text" id="filtro-input" placeholder="Escribe aquí...">
+  <div class="filtros-bar">
+    <input type="checkbox" id="toggle-filtro" hidden>
+    <label for="toggle-filtro" class="btn-filtrar">Filtrar</label>
+    <div class="filtros-panel">
+      <input type="text" id="filtro-input" placeholder="Busca por título...">
+      <div class="grupo-control">
+        <label for="orden-precio">Ordenar por precio</label>
+        <select id="orden-precio">
+          <option value="">Sin orden</option>
+          <option value="precio-asc">Menor a mayor</option>
+          <option value="precio-desc">Mayor a menor</option>
+        </select>
+      </div>
+      <div class="grupo-control">
+        <label for="orden-nombre">Ordenar por nombre</label>
+        <select id="orden-nombre">
+          <option value="">Sin orden</option>
+          <option value="nombre-asc">A - Z</option>
+          <option value="nombre-desc">Z - A</option>
+        </select>
+      </div>
+    </div>
+  </div>
 </section>
 
 <main>
+  <!-- Aside conservado solo como contenedor vacío por ahora; los filtros están bajo el botón Filtrar -->
+  <aside class="aside-filtros" aria-label="Opciones de ordenamiento"></aside>
 
-  <!--  
-  <aside>
-    <ul>
-      <li><a href="#libros">Libros</a></li>
-      <li><a href="#objetos">Objetos de colección</a></li>
-      <li><a href="#novedades">Novedades</a></li>
-      <li><a href="#ofertas">Ofertas</a></li>
-    </ul>
-  </aside>
--->
-
-  <section class="articulos" id="lista-articulos">
-    
-  </section>
-
+  <section class="articulos" id="lista-articulos"></section>
 </main>
 
  <section class="Contacto" id="Contacto">
     <h2>Contacto</h2>
-    <form action="mailto:tu_correo@example.com" method="post" enctype="text/plain">
-      <label for="name">Nombre:</label>
-      <input type="text" id="name" name="name" required>
-
-      <label for="email">Correo Electrónico:</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="message">Dejanos tu consulta:</label>
-      <textarea id="message" name="message" rows="5" cols="50" required></textarea>
-
-      <button type="submit">Enviar</button>
+    <form class="contact-form" action="mailto:tu_correo@example.com" method="post" enctype="text/plain" novalidate>
+      <div class="row two">
+        <div class="field">
+          <label for="first_name">Nombre</label>
+          <input type="text" id="first_name" name="first_name" placeholder="Tu nombre" required>
+        </div>
+        <div class="field">
+          <label for="last_name">Apellido</label>
+          <input type="text" id="last_name" name="last_name" placeholder="Tu apellido" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="email_contact">Correo electrónico</label>
+          <input type="email" id="email_contact" name="email" placeholder="nombre@dominio.com" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="subject">Asunto</label>
+          <input type="text" id="subject" name="subject" placeholder="¿Sobre qué trata tu consulta?" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="message_contact">Mensaje</label>
+          <textarea id="message_contact" name="message" rows="6" placeholder="Escribe tu mensaje..." required></textarea>
+        </div>
+      </div>
+      <div class="row terms">
+        <label class="checkbox">
+          <input type="checkbox" id="privacy" required>
+          <span>Acepto la política de privacidad</span>
+        </label>
+      </div>
+      <button type="submit" class="btn-submit">Enviar</button>
     </form>
   </section>
 

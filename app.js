@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (contenedorLista) {
         generarListaDeArticulos();
+        inicializarFiltrosYOrden();
     }
 
    
@@ -90,36 +91,271 @@ document.addEventListener('DOMContentLoaded', () => {
         generarDetalleDeArticulo();
     }
 
-});
-function generarListaDeArticulos() {
-    const contenedor = document.getElementById('lista-articulos');
-    contenedor.innerHTML = ''; 
+    const contCarrito = document.querySelector('.pagina-secundaria .articulos');
+    if (contCarrito && document.location.pathname.endsWith('carrito.html')) {
+        renderCarrito();
+    }
 
-    datosDeArticulos.forEach(articulo => {
+    if (document.location.pathname.endsWith('facturacion.html')) {
+        initFacturacion();
+    }
+
+});
+
+
+const KEY_CARRITO = 'carrito_zerymnor_v1';
+function obtenerCarrito() {
+  try { return JSON.parse(localStorage.getItem(KEY_CARRITO)) || []; } catch { return []; }
+}
+
+
+function initFacturacion() {
+  const params = new URLSearchParams(window.location.search);
+  const buy = params.get('buy');
+  const id = params.get('id');
+  const totalElem = document.querySelector('form h3');
+  const artInput = document.getElementById('articulo');
+  if (!totalElem) return;
+
+  if (buy === 'single' && id) {
+    const art = datosDeArticulos.find(a => a.id === id);
+    if (!art) return;
+    if (artInput) artInput.value = `${art.titulo} x1`;
+    totalElem.textContent = `Total: ${art.precio.toFixed(2)}`;
+    return;
+  }
+
+  const carrito = obtenerCarrito();
+  if (artInput) {
+    if (!carrito.length) {
+      artInput.value = 'Carrito vacío';
+    } else {
+      artInput.value = carrito.map(it => {
+        const a = datosDeArticulos.find(x => x.id === it.id);
+        return a ? `${a.titulo} x${it.cantidad}` : '';
+      }).filter(Boolean).join('\n');
+    }
+  }
+  const total = calcularTotal(carrito);
+  totalElem.textContent = `Total: ${total.toFixed(2)}`;
+}
+
+
+function renderCarrito() {
+  const lista = document.querySelector('.pagina-secundaria .articulos');
+  if (!lista) return;
+
+  
+  let totalWrap = document.querySelector('.pagina-secundaria .total');
+  if (!totalWrap) {
+    totalWrap = document.createElement('div');
+    totalWrap.className = 'total';
+    
+    if (lista.parentElement) lista.parentElement.appendChild(totalWrap);
+  }
+
+  const carrito = obtenerCarrito();
+  lista.innerHTML = '';
+
+  if (!carrito.length) {
+    const vacio = document.createElement('div');
+    vacio.className = 'item-carrito';
+    vacio.innerHTML = `<p style="padding:12px; font-size:18px;">No hay artículos en el carrito aún.</p>`;
+    lista.appendChild(vacio);
+
+    totalWrap.innerHTML = `<p>Total: $0.00</p><a href="facturacion.html"><button disabled>Finalizar Compra</button></a>`;
+    return;
+  }
+
+  carrito.forEach(({ id, cantidad }) => {
+    const art = datosDeArticulos.find(a => a.id === id);
+    if (!art) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'item-carrito';
+    wrap.innerHTML = `
+      <img src="${art.imgSrc}" alt="${art.titulo}">
+      <div class="info">
+        <h3>${art.titulo}</h3>
+        <p>${art.descripcionCorta}</p>
+        <p id="Precio">Precio: ${art.precio.toFixed(2)}</p>
+        <p class="stock">Stock: ${art.stock}</p>
+      </div>
+      <button class="btn-eliminar" data-id="${id}">Eliminar</button>
+      <label for="cantidad-${id}" id="cantidad-label">Cantidad:</label>
+      <input id="cantidad-${id}" type="number" min="1" max="${art.stock}" value="${Math.min(cantidad, art.stock)}">
+    `;
+    lista.appendChild(wrap);
+  });
+
+ 
+  lista.querySelectorAll('input[type="number"]').forEach(inp => {
+    inp.addEventListener('input', (e) => {
+      const id = e.target.id.replace('cantidad-','');
+      const art = datosDeArticulos.find(a => a.id === id);
+      const val = parseInt(e.target.value || '1', 10);
+      const safe = Math.max(1, Math.min(art.stock, val));
+      e.target.value = safe;
+      actualizarCantidadEnCarrito(id, safe);
+      actualizarTotal();
+    });
+  });
+  lista.querySelectorAll('.btn-eliminar').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      eliminarDelCarrito(id);
+      renderCarrito();
+    });
+  });
+
+  function actualizarTotal() {
+    const carrito = obtenerCarrito();
+    const total = calcularTotal(carrito);
+    // Reutilizar el único contenedor de total
+    const totalElem = totalWrap.querySelector('p');
+    if (!totalElem) {
+      totalWrap.innerHTML = `<p>Total: ${total.toFixed(2)}</p><a href="facturacion.html"><button>Finalizar Compra</button></a>`;
+    } else {
+      totalElem.textContent = `Total: ${total.toFixed(2)}`;
+    }
+  }
+
+  actualizarTotal();
+}
+function guardarCarrito(carrito) {
+  localStorage.setItem(KEY_CARRITO, JSON.stringify(carrito));
+}
+function agregarAlCarrito(id) {
+  const articulo = datosDeArticulos.find(a => a.id === id);
+  if (!articulo) return;
+  const carrito = obtenerCarrito();
+  const item = carrito.find(i => i.id === id);
+  if (!item) {
+    carrito.push({ id, cantidad: 1 });
+    guardarCarrito(carrito);
+    alert(`Añadido "${articulo.titulo}" al carrito`);
+    return;
+  }
+  if (item.cantidad >= articulo.stock) {
+    alert(`No hay más stock disponible para "${articulo.titulo}". Máximo: ${articulo.stock}`);
+    return;
+  }
+  item.cantidad += 1;
+  guardarCarrito(carrito);
+  alert(`Añadido "${articulo.titulo}" al carrito (x${item.cantidad})`);
+}
+function actualizarCantidadEnCarrito(id, cantidad) {
+  const carrito = obtenerCarrito();
+  const item = carrito.find(i => i.id === id);
+  if (!item) return;
+  const art = datosDeArticulos.find(a => a.id === id);
+  const max = art ? art.stock : cantidad;
+  item.cantidad = Math.max(1, Math.min(max, cantidad));
+  guardarCarrito(carrito);
+}
+function eliminarDelCarrito(id) {
+  let carrito = obtenerCarrito();
+  carrito = carrito.filter(i => i.id !== id);
+  guardarCarrito(carrito);
+}
+function calcularTotal(carrito) {
+  return carrito.reduce((acc, it) => {
+    const art = datosDeArticulos.find(a => a.id === it.id);
+    return acc + (art ? art.precio * it.cantidad : 0);
+  }, 0);
+}
+
+function generarListaDeArticulos(lista = datosDeArticulos) {
+    const contenedor = document.getElementById('lista-articulos');
+    contenedor.innerHTML = '';
+
+    lista.forEach(articulo => {
         const divArticulo = document.createElement('div');
         divArticulo.classList.add('item');
+        divArticulo.dataset.titulo = articulo.titulo.toLowerCase();
+        divArticulo.dataset.precio = articulo.precio;
 
-        // El enlace ahora apunta a 'articulo.html' y le pasa el 'id'
-        // como un "parámetro de búsqueda" en la URL.
         divArticulo.innerHTML = `
             <img src="${articulo.imgSrc}" alt="${articulo.titulo}" width="400px">
             <h3><a href="articulo.html?id=${articulo.id}">${articulo.titulo}</a></h3>
             <p>${articulo.descripcionCorta}</p>
-            <p>Precio: $${articulo.precio}</p>
+            <p class="precio">Precio: ${articulo.precio.toFixed(2)}</p>
+            <p class="stock">Stock: ${articulo.stock}</p>
             <button data-id="${articulo.id}">Añadir al carrito</button>
         `;
-        
         contenedor.appendChild(divArticulo);
     });
 
-    
     const botones = contenedor.querySelectorAll('.item button');
     botones.forEach(boton => {
         boton.addEventListener('click', () => {
-            const titulo = boton.parentElement.querySelector('h3 a').innerText;
-            alert(`¡Agregaste "${titulo}" al carrito!`);
-            
+            const id = boton.getAttribute('data-id');
+            agregarAlCarrito(id);
         });
+    });
+}
+
+function inicializarFiltrosYOrden() {
+    const inputFiltro = document.getElementById('filtro-input');
+    const selOrdenPrecio = document.getElementById('orden-precio');
+    const selOrdenNombre = document.getElementById('orden-nombre');
+
+    let termino = '';
+    let criterioOrden = '';
+
+    function aplicar() {
+        
+        let resultado = datosDeArticulos.filter(a =>
+            a.titulo.toLowerCase().includes(termino)
+        );
+
+        
+        switch (criterioOrden) {
+            case 'precio-asc':
+                resultado.sort((a,b) => a.precio - b.precio);
+                break;
+            case 'precio-desc':
+                resultado.sort((a,b) => b.precio - a.precio);
+                break;
+            case 'nombre-asc':
+                resultado.sort((a,b) => a.titulo.localeCompare(b.titulo));
+                break;
+            case 'nombre-desc':
+                resultado.sort((a,b) => b.titulo.localeCompare(a.titulo));
+                break;
+            default:
+                
+                break;
+        }
+
+        generarListaDeArticulos(resultado);
+    }
+
+    if (inputFiltro) {
+        inputFiltro.addEventListener('input', e => {
+            termino = e.target.value.trim().toLowerCase();
+            aplicar();
+        });
+    }
+
+    function actualizarOrden() {
+        const vPrecio = selOrdenPrecio ? selOrdenPrecio.value : '';
+        const vNombre = selOrdenNombre ? selOrdenNombre.value : '';
+
+        criterioOrden = vPrecio || vNombre;
+        aplicar();
+    }
+
+    if (selOrdenPrecio) selOrdenPrecio.addEventListener('change', () => {
+       
+        if (selOrdenNombre) selOrdenNombre.value = '';
+        actualizarOrden();
+    });
+
+    if (selOrdenNombre) selOrdenNombre.addEventListener('change', () => {
+        
+        if (selOrdenPrecio) selOrdenPrecio.value = '';
+        actualizarOrden();
     });
 }
 
@@ -145,18 +381,19 @@ function generarDetalleDeArticulo() {
             <img src="${articulo.imgSrc}" alt="${articulo.titulo}">
             <h3>${articulo.titulo}</h3>
             <p>${articulo.descripcionLarga}</p>
-            <p class="precio">Precio: $${articulo.precio}</p>
+            <p class="precio">Precio: ${articulo.precio}</p>
             <p class="stock">Stock: ${articulo.stock} unidades disponibles!</p>
             <button class="btn-agregar" data-id="${articulo.id}">Añadir al carrito</button>
-            <a href="facturacion.html"><button class="btn-comprar">Comprar ahora</button></a>
+            <a href="facturacion.html?buy=single&id=${articulo.id}"><button class="btn-comprar">Comprar ahora</button></a>
         `;
 
         
         const botonAgregar = contenedor.querySelector('.btn-agregar');
-        botonAgregar.addEventListener('click', () => {
-             alert(`¡Agregaste "${articulo.titulo}" al carrito!`);
-             
-        });
+        botonAgregar.replaceWith(botonAgregar.cloneNode(true));
+        const btn = contenedor.querySelector('.btn-agregar');
+        btn.addEventListener('click', () => {
+             agregarAlCarrito(articulo.id);
+        }, { once: true });
 
     } else {
       
