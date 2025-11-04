@@ -1,3 +1,34 @@
+/*
+================================================================
+📜 ÍNDICE DE FUNCIONES
+================================================================
+
+(Este es el índice completo para referencia. 
+Debajo, cada subtítulo está colocado 
+a fin de facilitar la navegación profe, no me pegue :( )).
+
+###  Punto de Entrada
+* document.addEventListener('DOMContentLoaded', ...)
+
+###  Gestión del Carrito
+* obtenerCarrito()
+* guardarCarrito(carrito)
+* agregarAlCarrito(id)
+* actualizarCantidadEnCarrito(id, cantidad)
+* eliminarDelCarrito(id)
+* calcularTotal(carrito)
+
+###  Renderizado de Páginas
+* generarListaDeArticulos(lista)
+* generarDetalleDeArticulo()
+* renderCarrito()
+* initFacturacion()
+
+###  Filtros y Orden
+* inicializarFiltrosYOrden()
+
+================================================================
+*/
 
 const datosDeArticulos = [
   {
@@ -74,6 +105,10 @@ const datosDeArticulos = [
   }
 ];
 
+/*
+### 🚀 Punto de Entrada
+* document.addEventListener('DOMContentLoaded', ...)
+*/
 document.addEventListener('DOMContentLoaded', () => {
 
     
@@ -104,11 +139,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 const KEY_CARRITO = 'carrito_zerymnor_v1';
+
+/*
+### 🛒 Gestión del Carrito
+* obtenerCarrito()
+*/
 function obtenerCarrito() {
   try { return JSON.parse(localStorage.getItem(KEY_CARRITO)) || []; } catch { return []; }
 }
 
-
+/*
+### 📄 Renderizado de Páginas
+* initFacturacion()
+*/
 function initFacturacion() {
   const params = new URLSearchParams(window.location.search);
   const buy = params.get('buy');
@@ -140,7 +183,10 @@ function initFacturacion() {
   totalElem.textContent = `Total: ${total.toFixed(2)}`;
 }
 
-
+/*
+### 📄 Renderizado de Páginas
+* renderCarrito()
+*/
 function renderCarrito() {
   const lista = document.querySelector('.pagina-secundaria .articulos');
   if (!lista) return;
@@ -222,9 +268,19 @@ function renderCarrito() {
 
   actualizarTotal();
 }
+
+/*
+### 🛒 Gestión del Carrito
+* guardarCarrito(carrito)
+*/
 function guardarCarrito(carrito) {
   localStorage.setItem(KEY_CARRITO, JSON.stringify(carrito));
 }
+
+/*
+### 🛒 Gestión del Carrito
+* agregarAlCarrito(id)
+*/
 function agregarAlCarrito(id) {
   const articulo = datosDeArticulos.find(a => a.id === id);
   if (!articulo) return;
@@ -244,6 +300,11 @@ function agregarAlCarrito(id) {
   guardarCarrito(carrito);
   alert(`Añadido "${articulo.titulo}" al carrito (x${item.cantidad})`);
 }
+
+/*
+### 🛒 Gestión del Carrito
+* actualizarCantidadEnCarrito(id, cantidad)
+*/
 function actualizarCantidadEnCarrito(id, cantidad) {
   const carrito = obtenerCarrito();
   const item = carrito.find(i => i.id === id);
@@ -253,11 +314,21 @@ function actualizarCantidadEnCarrito(id, cantidad) {
   item.cantidad = Math.max(1, Math.min(max, cantidad));
   guardarCarrito(carrito);
 }
+
+/*
+### 🛒 Gestión del Carrito
+* eliminarDelCarrito(id)
+*/
 function eliminarDelCarrito(id) {
   let carrito = obtenerCarrito();
   carrito = carrito.filter(i => i.id !== id);
   guardarCarrito(carrito);
 }
+
+/*
+### 🛒 Gestión del Carrito
+* calcularTotal(carrito)
+*/
 function calcularTotal(carrito) {
   return carrito.reduce((acc, it) => {
     const art = datosDeArticulos.find(a => a.id === it.id);
@@ -265,6 +336,10 @@ function calcularTotal(carrito) {
   }, 0);
 }
 
+/*
+### 📄 Renderizado de Páginas
+* generarListaDeArticulos(lista)
+*/
 function generarListaDeArticulos(lista = datosDeArticulos) {
     const contenedor = document.getElementById('lista-articulos');
     contenedor.innerHTML = '';
@@ -295,6 +370,10 @@ function generarListaDeArticulos(lista = datosDeArticulos) {
     });
 }
 
+/*
+### 🔍 Filtros y Orden
+* inicializarFiltrosYOrden()
+*/
 function inicializarFiltrosYOrden() {
     const inputFiltro = document.getElementById('filtro-input');
     const selOrdenPrecio = document.getElementById('orden-precio');
@@ -360,7 +439,10 @@ function inicializarFiltrosYOrden() {
 }
 
 
-
+/*
+### 📄 Renderizado de Páginas
+* generarDetalleDeArticulo()
+*/
 function generarDetalleDeArticulo() {
     
     const params = new URLSearchParams(window.location.search);
