@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Artículo - Zerymnor</title>
+    <link rel="stylesheet" href="style_css/style.css">
+</head>
+<body class="pagina-secundaria">
+
+    <nav>
+        <div class="vol_inicio">
+            <ul>
+                <li><a href="index.html">Volver a Inicio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <div class="logo-container">
+            <img class="logo" src="./img/logo_z.jpg" alt="logo">
+        </div>
+    </header>
+
+    <h2>Crear Nuevo Artículo</h2>
+
+    <main>
+        <form id="form-crear-articulo">
+            <fieldset>
+                <legend>Datos del Artículo</legend>
+                
+                <label for="articulo-titulo">Título:</label>
+                <input type="text" id="articulo-titulo" name="titulo" required>
+                
+                <label for="articulo-descripcion">Descripción:</label>
+                <textarea id="articulo-descripcion" name="descripcion" rows="5"></textarea>
+                
+                <label for="articulo-precio">Precio:</label>
+                <input type="number" id="articulo-precio" name="precio" step="0.01" required>
+                
+                <label for="articulo-imagen">URL de Imagen:</label>
+                <input type="text" id="articulo-imagen" name="imagen" placeholder="https://ejemplo.com/imagen.jpg" required>
+
+                <button type="submit" id="btn-submit-articulo">Crear</button>

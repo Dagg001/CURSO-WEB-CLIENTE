@@ -434,6 +434,37 @@ nav, header, main, footer {
   font-size: 20px;
   align-self: center;
 }
+
+.pagina-principal .crear-articulo-cta {
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 20px; 
+}
+
+.pagina-principal .btn-crear-articulo {
+  background: var(--color-primario-oscuro);
+  color: var(--color-texto-claro);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-weight: 700;
+  font-size: 20px;
+  text-decoration: none;
+  letter-spacing: .3px;
+  cursor: pointer;
+  transition: background-color .2s ease, box-shadow .2s ease, transform .06s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,.16);
+}
+
+.pagina-principal .btn-crear-articulo:hover {
+  background: var(--color-texto-oscuro-hover);
+  box-shadow: 0 8px 18px rgba(0,0,0,.20);
+}
+
+.pagina-principal .btn-crear-articulo:active {
+  transform: translateY(1px);
+}
+
 .pagina-principal .Contacto input,
 .pagina-principal .Contacto textarea {
   width: 40%;
@@ -928,6 +959,29 @@ nav, header, main, footer {
 .pagina-secundaria .formulario-compra button:hover {
   background-color: var(--color-texto-oscuro-hover);
 }
+
+.pagina-secundaria button[type="submit"] {
+  background-color: var(--color-texto-oscuro);
+  color: var(--color-texto-claro);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background-color .2s ease, box-shadow .2s ease, transform .06s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,.16);
+  letter-spacing: .3px;
+}
+.pagina-secundaria button[type="submit"]:hover {
+  background-color: var(--color-texto-oscuro-hover);
+  box-shadow: 0 8px 18px rgba(0,0,0,.20);
+}
+.pagina-secundaria button[type="submit"]:active { 
+  transform: translateY(1px); 
+}
+
 
 
 /* --------------------------------

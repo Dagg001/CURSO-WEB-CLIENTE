@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const KEY_CARRITO = 'carrito_zerymnor_v1';
 
 /*
-### 🛒 Gestión del Carrito
+### Gestión del Carrito
 * obtenerCarrito()
 */
 function obtenerCarrito() {
@@ -149,7 +149,7 @@ function obtenerCarrito() {
 }
 
 /*
-### 📄 Renderizado de Páginas
+###  Renderizado de Páginas
 * initFacturacion()
 */
 function initFacturacion() {
@@ -184,7 +184,7 @@ function initFacturacion() {
 }
 
 /*
-### 📄 Renderizado de Páginas
+### Renderizado de Páginas
 * renderCarrito()
 */
 function renderCarrito() {
@@ -270,7 +270,7 @@ function renderCarrito() {
 }
 
 /*
-### 🛒 Gestión del Carrito
+###  Gestión del Carrito
 * guardarCarrito(carrito)
 */
 function guardarCarrito(carrito) {
@@ -278,7 +278,7 @@ function guardarCarrito(carrito) {
 }
 
 /*
-### 🛒 Gestión del Carrito
+### Gestión del Carrito
 * agregarAlCarrito(id)
 */
 function agregarAlCarrito(id) {
@@ -302,7 +302,7 @@ function agregarAlCarrito(id) {
 }
 
 /*
-### 🛒 Gestión del Carrito
+### Gestión del Carrito
 * actualizarCantidadEnCarrito(id, cantidad)
 */
 function actualizarCantidadEnCarrito(id, cantidad) {
@@ -316,7 +316,7 @@ function actualizarCantidadEnCarrito(id, cantidad) {
 }
 
 /*
-### 🛒 Gestión del Carrito
+### Gestión del Carrito
 * eliminarDelCarrito(id)
 */
 function eliminarDelCarrito(id) {
@@ -326,7 +326,7 @@ function eliminarDelCarrito(id) {
 }
 
 /*
-### 🛒 Gestión del Carrito
+### Gestión del Carrito
 * calcularTotal(carrito)
 */
 function calcularTotal(carrito) {
@@ -337,7 +337,7 @@ function calcularTotal(carrito) {
 }
 
 /*
-### 📄 Renderizado de Páginas
+###  Renderizado de Páginas
 * generarListaDeArticulos(lista)
 */
 function generarListaDeArticulos(lista = datosDeArticulos) {
@@ -371,7 +371,7 @@ function generarListaDeArticulos(lista = datosDeArticulos) {
 }
 
 /*
-### 🔍 Filtros y Orden
+###  Filtros y Orden
 * inicializarFiltrosYOrden()
 */
 function inicializarFiltrosYOrden() {
@@ -440,7 +440,7 @@ function inicializarFiltrosYOrden() {
 
 
 /*
-### 📄 Renderizado de Páginas
+###  Renderizado de Páginas
 * generarDetalleDeArticulo()
 */
 function generarDetalleDeArticulo() {
