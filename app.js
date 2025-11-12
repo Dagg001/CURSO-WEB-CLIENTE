@@ -10,8 +10,7 @@
 10 - Facturación
 11 - Actualizar stock en Airtable
 12 - Procesar compra
-13 - Validación y binding del formulario
-14 - Punto de entrada*/
+13 - Validación y binding del formulario */
 
 import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
 
