@@ -13,7 +13,7 @@
 13 - Validación y binding del formulario
 14 - Punto de entrada*/
 
-const airtableToken = "patdlLReDYHBrY3uG.ff213a9ded1df54402f59360f4d03096b228f788319d4ee187c3b2c0aab3fb22";
+const airtableToken = "node.js: REDACTED FOR SECURITY"; 
 const baseId = "apphhY10pI2VjEFLQ";
 const tableName = "proyectoZ";
 const airtableUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
