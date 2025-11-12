@@ -13,9 +13,11 @@
 13 - Validación y binding del formulario
 14 - Punto de entrada*/
 
-const airtableToken = "node.js: REDACTED FOR SECURITY"; 
-const baseId = "apphhY10pI2VjEFLQ";
-const tableName = "proyectoZ";
+import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
+
+const airtableToken = AIRTABLE_TOKEN;
+const baseId = BASE_ID;
+const tableName = TABLE_NAME;
 const airtableUrl = `https://api.airtable.com/v0/${baseId}/${tableName}`;
 
 let datosDeArticulos = [];
