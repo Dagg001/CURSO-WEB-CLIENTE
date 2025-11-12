@@ -1,17 +1,3 @@
-/*1 - Helpers
-2 - Conversión record -> articulo
-3 - Cargar datos desde Airtable
-4 - Carrito (obtener / guardar / agregar / actualizar / eliminar)
-5 - Agrupar IDs y cálculo de totales
-6 - Render Lista
-7 - Filtros y orden
-8 - Detalle de artículo
-9 - Render carrito
-10 - Facturación
-11 - Actualizar stock en Airtable
-12 - Procesar compra
-13 - Validación y binding del formulario */
-
 import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
 
 const airtableToken = AIRTABLE_TOKEN;
@@ -432,7 +418,7 @@ function validarFormularioFacturacion(form) {
   const nombre = form.querySelector('#nombre')?.value?.trim();
   const email = form.querySelector('#email')?.value?.trim();
   const direccion = form.querySelector('#direccion')?.value?.trim();
-  const tarjeta = form.querySelector('#tarjeta')?.value?.replace(/\s+/g,'');
+  const tarjeta = form.querySelector('#tarjeta')?.value?.replace(/\s+/g,'')
   const expiracion = form.querySelector('#expiracion')?.value;
   const cvv = form.querySelector('#cvv')?.value?.trim();
 
@@ -500,7 +486,49 @@ function bindFormularioFacturacion() {
   });
 }
 
-// 17 - Punto de entrada
+// 17 - Delegated event handlers
+function initDelegatedHandlers() {
+  const lista = document.getElementById('lista-articulos');
+  if (lista) {
+    lista.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-id]');
+      if (btn) {
+        const id = btn.getAttribute('data-id');
+        agregarAlCarrito(id);
+        return;
+      }
+      const enlace = e.target.closest('a[href*="articulo.html"]');
+      if (enlace) {
+        // permitir navegación normal; si quieres, puedes manejar SPA aquí
+        return;
+      }
+    });
+  }
+
+  const carritoCont = document.querySelector('.pagina-secundaria .articulos');
+  if (carritoCont) {
+    carritoCont.addEventListener('click', (e) => {
+      const btnEliminar = e.target.closest('button.btn-eliminar');
+      if (btnEliminar) {
+        const id = btnEliminar.getAttribute('data-id');
+        eliminarDelCarrito(id);
+        renderCarrito();
+        return;
+      }
+    });
+    carritoCont.addEventListener('input', (e) => {
+      const inp = e.target.closest('input[type="number"][id^="cantidad-"]');
+      if (inp) {
+        const id = inp.id.replace('cantidad-','');
+        const val = Math.max(1, Math.min(Number(inp.value) || 1, Number(inp.max) || 999));
+        actualizarCantidadEnCarrito(id, val);
+        renderCarrito();
+      }
+    });
+  }
+}
+
+// 18 - Punto de entrada
 document.addEventListener('DOMContentLoaded', () => {
   cargarDatosDesdeAirtable().then(() => {
     const contenedorLista = document.getElementById('lista-articulos');
@@ -523,5 +551,7 @@ document.addEventListener('DOMContentLoaded', () => {
       initFacturacion();
       bindFormularioFacturacion();
     }
+
+    initDelegatedHandlers();
   });
 });
