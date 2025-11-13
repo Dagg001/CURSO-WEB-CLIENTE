@@ -1,7 +1,49 @@
-/* --------------------------------
- 1. Variables Globales 
---------------------------------
+/*
+========================================
+ ÍNDICE DE ESTILOS (Zerymnor)
+========================================
+
+ 1. GLOBALES
+    - 1.1. Variables (:root)
+    - 1.2. Reseteo y Estilos Base (html, body, footer)
+
+ 2. COMPONENTES GLOBALES
+    - 2.1. Botones (Abstracción de redundancias)
+    - 2.2. Formularios (Inputs, Textareas, Selects)
+    - 2.3. Notificación Toast
+
+ 3. LAYOUT PRINCIPAL (pagina-principal)
+    - 3.1. Nav y Header
+    - 3.2. Contenido (Intro, Quiénes Somos)
+    - 3.3. Artículos (Filtros y Lista)
+    - 3.4. Sección Contacto
+
+ 4. LAYOUT SECUNDARIO (pagina-secundaria)
+    - 4.1. Nav y Header
+    - 4.2. Página Artículo (articulo.html)
+    - 4.3. Página Carrito (carrito.html)
+    - 4.4. Página Facturación (facturacion.html)
+    - 4.5. Página Compra Lista (compra_lista.html)
+
+ 5. SECCIONES DE ADMIN
+    - 5.1. Lista de Artículos (Admin)
+    - 5.2. Modal Edición (Admin)
+
+ 6. MEDIA QUERIES (Responsivo)
+    - 6.1. Tablet Grande (~1200px)
+    - 6.2. Tablet (~1024px)
+    - 6.3. Tablet Pequeña (~900px)
+    - 6.4. Celular (~768px)
+    - 6.5. Celular Pequeño (~600px)
+
+========================================
 */
+
+/* --------------------------------
+ 1. GLOBALES
+-------------------------------- */
+
+/* --- 1.1. Variables (:root) --- */
 :root {
   --color-fondo: #faf2e1;
   --color-primario: #b48a7e;
@@ -13,23 +55,20 @@
   --font-titulos: "Bodoni MT", serif;
 }
 
-/* --------------------------------
- 2. Estilos Globales
---------------------------------
-*/
+/* --- 1.2. Reseteo y Estilos Base --- */
 html {
   scroll-behavior: smooth;
-}
-
-@keyframes aparecer {
-  from { opacity: 0 }
-  to { opacity: 1 }
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+@keyframes aparecer {
+  from { opacity: 0 }
+  to { opacity: 1 }
 }
 
 body {
@@ -44,14 +83,12 @@ nav, header, main, footer {
   width: 100%;
 }
 
-
 .footer {
   background: var(--color-footer);
   text-align: center;
   padding: 50px 0;
   color: var(--color-texto-claro);
   font-size: 20px;
-  
   margin-top: auto;
 }
 .footer p {
@@ -66,11 +103,170 @@ nav, header, main, footer {
 }
 
 /* --------------------------------
- 3. Layout Principal (base.html)
---------------------------------
-*/
+ 2. COMPONENTES GLOBALES
+-------------------------------- */
 
-/* --- Nav y Header Principal --- */
+/* --- 2.1. Botones (Abstracción de redundancias) --- */
+
+/* Base común para la mayoría de botones de la web */
+.pagina-principal .item button,
+.pagina-principal .Contacto .btn-submit,
+.pagina-principal .btn-crear-articulo,
+.pagina-secundaria .articulos > * button.btn-eliminar, /* Asumiendo que es este */
+.pagina-secundaria .total button,
+.pagina-secundaria button[type="submit"],
+#btn-guardar-cambios {
+  appearance: none;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px; /* Unificado, puedes ajustarlo */
+  font-weight: 700;
+  font-size: 18px; /* Unificado */
+  cursor: pointer;
+  color: var(--color-texto-claro);
+  letter-spacing: .3px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.06s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,.16);
+}
+
+.pagina-principal .item button:active,
+.pagina-principal .Contacto .btn-submit:active,
+.pagina-principal .btn-crear-articulo:active,
+.pagina-secundaria button[type="submit"]:active,
+#btn-guardar-cambios:active {
+  transform: translateY(1px);
+}
+
+/* Colores de Botones: Primario (Más oscuro) */
+.pagina-principal .item button,
+.pagina-principal .Contacto .btn-submit,
+.pagina-secundaria .articulos > * button.btn-eliminar,
+.pagina-secundaria .total button,
+.pagina-secundaria button[type="submit"],
+#btn-guardar-cambios {
+  background: var(--color-texto-oscuro);
+}
+
+.pagina-principal .item button:hover,
+.pagina-principal .Contacto .btn-submit:hover,
+.pagina-secundaria .articulos > * button.btn-eliminar:hover,
+.pagina-secundaria .total button:hover,
+.pagina-secundaria button[type="submit"]:hover,
+#btn-guardar-cambios:hover {
+  background: var(--color-texto-oscuro-hover);
+}
+
+/* Colores de Botones: Secundario (Medio) */
+.pagina-principal .btn-crear-articulo,
+.pagina-articulo .articulo1 .btn-agregar {
+  background: var(--color-primario-oscuro);
+}
+.pagina-principal .btn-crear-articulo:hover {
+  background: var(--color-texto-oscuro-hover);
+}
+.pagina-articulo .articulo1 .btn-agregar:hover {
+  background: #5f4741;
+}
+
+/* Colores de Botones: Terciario (Claro) */
+.pagina-articulo .articulo1 .btn-comprar {
+  background: var(--color-primario);
+}
+.pagina-articulo .articulo1 .btn-comprar:hover {
+  background: #a17669;
+}
+
+/* --- 2.2. Formularios (Inputs, Textareas, Selects) --- */
+
+/* Base común para inputs y textareas */
+.pagina-principal .Contacto .field input,
+.pagina-principal .Contacto .field textarea,
+.pagina-secundaria input[type="text"],
+.pagina-secundaria input[type="email"],
+.pagina-secundaria input[type="tel"],
+.pagina-secundaria input[type="month"],
+.pagina-secundaria input[type="password"],
+.pagina-secundaria input[type="number"],
+.pagina-secundaria textarea#articulo,
+#modal-editar-articulo input[type="text"],
+#modal-editar-articulo input[type="number"],
+#modal-editar-articulo textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  border: 2px solid var(--color-primario-oscuro);
+  border-radius: 12px;
+  font-size: 18px;
+  background: var(--color-fondo);
+  color: var(--color-texto-oscuro);
+  font-family: inherit;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+
+.pagina-principal .Contacto .field input::placeholder,
+.pagina-principal .Contacto .field textarea::placeholder,
+.pagina-secundaria textarea#articulo::placeholder {
+  color: #7a6a65;
+  opacity: .9;
+}
+
+/* Base común para :focus */
+.pagina-principal .Contacto .field input:focus,
+.pagina-principal .Contacto .field textarea:focus,
+.pagina-secundaria input:focus,
+.pagina-secundaria textarea#articulo:focus,
+#modal-editar-articulo input:focus,
+#modal-editar-articulo textarea:focus {
+  outline: none;
+  border-color: var(--color-primario-oscuro);
+  box-shadow: 0 0 0 3px rgba(117,88,80,.15);
+}
+
+/* Base común para selects */
+.pagina-principal .aside-filtros select,
+.pagina-principal .grupo-control select {
+  background: var(--color-fondo);
+  color: var(--color-texto-oscuro);
+  border: 2px solid var(--color-primario-oscuro);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+/* --- 2.3. Notificación Toast --- */
+#notificacion-toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+
+  /* Estilo con variables de la web */
+  background-color: var(--color-primario);
+  color: var(--color-texto-claro);
+  border: 1px solid var(--color-primario-oscuro); /* Borde con más contraste */
+  
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  font-size: 16px;
+  
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease, visibility 0.4s ease, bottom 0.4s ease;
+}
+
+#notificacion-toast.toast-mostrando {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}
+
+
+/* --------------------------------
+ 3. LAYOUT PRINCIPAL (pagina-principal)
+-------------------------------- */
+
+/* --- 3.1. Nav y Header --- */
 .pagina-principal nav {
   background: var(--color-primario);
   height: 100px;
@@ -129,7 +325,6 @@ nav, header, main, footer {
   border-radius: 50px;
 }
 
-
 .pagina-principal .logo {
   width: 400px;
   height: auto;
@@ -140,7 +335,7 @@ nav, header, main, footer {
   z-index: 1;
 }
 
-/* --- Contenido Principal --- */
+/* --- 3.2. Contenido (Intro, Quiénes Somos) --- */
 .pagina-principal .presentation {
   text-align: center;
   padding-top: 150px;
@@ -205,58 +400,7 @@ nav, header, main, footer {
   gap: 20px;
 }
 
-
-.pagina-principal .articulos {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 28px;
-  padding: 20px;
-  flex-grow: 1;
-}
-
-
-.pagina-principal .aside-filtros {
-  display: none;
-}
-.pagina-principal .aside-filtros .aside-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.pagina-principal .aside-filtros .aside-toggle {
-  display: inline-block;
-  background: var(--color-texto-oscuro);
-  color: var(--color-texto-claro);
-  padding: 8px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color .3s ease;
-}
-.pagina-principal .aside-filtros .aside-toggle:hover {
-  background: var(--color-texto-oscuro-hover);
-}
-.pagina-principal .aside-filtros .aside-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height .35s ease;
-}
-.pagina-principal #toggle-aside:checked ~ .aside-header + .aside-content {
-  max-height: 300px;
-}
-.pagina-principal .aside-filtros .grupo-control {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 12px;
-}
-.pagina-principal .aside-filtros select {
-  background: var(--color-fondo);
-  color: var(--color-texto-oscuro);
-  border: 2px solid var(--color-primario-oscuro);
-  border-radius: 10px;
-  padding: 8px 10px;
-}
-
+/* --- 3.3. Artículos (Filtros y Lista) --- */
 .pagina-principal .articles { /* Título H2 "Artículos Destacados" */
   color: var(--color-primario-oscuro);
   font-size: 50px;
@@ -264,6 +408,18 @@ nav, header, main, footer {
   margin: 90px 0 30px;
 }
 
+.pagina-principal .articulos { /* Contenedor de .item */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.pagina-principal .aside-filtros {
+  display: none;
+}
+/* ... (estilos de aside-filtros que no se usan, omitidos por brevedad) ... */
 
 .pagina-principal .filtros-bar {
   display: flex;
@@ -297,14 +453,8 @@ nav, header, main, footer {
   transition: all .35s ease;
 }
 .pagina-principal #filtro-input {
-  padding: 6px 10px;
-  font-size: 14px;
-  border: 2px solid var(--color-primario-oscuro);
-  border-radius: 10px;
-  outline: none;
+  /* Estilos base de input ya definidos en 2.2 */
   min-width: 220px;
-  background: var(--color-fondo);
-  color: var(--color-texto-oscuro);
 }
 .pagina-principal .grupo-control label {
   font-weight: 600;
@@ -312,10 +462,7 @@ nav, header, main, footer {
   font-size: 12px;
 }
 .pagina-principal .grupo-control select {
-  background: var(--color-fondo);
-  color: var(--color-texto-oscuro);
-  border: 2px solid var(--color-primario-oscuro);
-  border-radius: 10px;
+  /* Estilos base de select ya definidos en 2.2 */
   padding: 6px 8px;
   font-size: 12px;
 }
@@ -324,7 +471,6 @@ nav, header, main, footer {
   opacity: 1;
   padding-top: 8px;
 }
-
 
 .pagina-principal .item {
   background: var(--color-primario);
@@ -358,30 +504,18 @@ nav, header, main, footer {
   margin-bottom: 10px;
 }
 .pagina-principal .item button {
-  background: var(--color-texto-oscuro);
-  color: var(--color-texto-claro);
-  border: none;
+  /* Estilos base de botón ya definidos en 2.1 */
   padding: 10px 22px;
   font-size: 15px;
   border-radius: 12px;
-  cursor: pointer;
-  transition: background-color .2s ease, box-shadow .2s ease, transform .06s ease;
   letter-spacing: .2px;
   box-shadow: 0 3px 10px rgba(52, 36, 31, 0.25);
-}
-.pagina-principal .item button:hover {
-  background: var(--color-texto-oscuro-hover);
-  box-shadow: 0 6px 14px rgba(52,36,31,.28);
-}
-.pagina-principal .item button:active { transform: translateY(1px); }
-.pagina-principal .item button:hover {
-  background: var(--color-texto-oscuro-hover);
 }
 .pagina-principal .item img {
   display: block;
   width: 85%;
   height: 260px;
-  object-fit: contain; 
+  object-fit: contain;
   background: linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.3));
   border: 1px solid rgba(0,0,0,.06);
   margin: 0 auto 12px;
@@ -389,7 +523,7 @@ nav, header, main, footer {
   padding: 6px;
 }
 
-
+/* --- 3.4. Sección Contacto --- */
 .pagina-principal .Contacto {
   width: 100%;
   background: var(--color-primario-oscuro);
@@ -400,94 +534,6 @@ nav, header, main, footer {
   align-items: center;
   gap: 22px;
 }
-.pagina-principal .Contacto form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  max-width: 640px;
-  margin: 0 auto;
-  border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 3px 6px rgba(0,0,0,.08);
-  padding: 20px 24px;
-}
-
-.pagina-principal .Contacto .contact-form { width: min(820px, 92vw); margin: 0 auto; background: rgba(250,242,225,.06); border-radius: 16px; padding: 18px 20px; }
-.pagina-principal .Contacto .row { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 14px; }
-.pagina-principal .Contacto .row.two { grid-template-columns: 1fr 1fr; gap: 16px; }
-.pagina-principal .Contacto .field label { font-size: 16px; font-weight: 700; color: var(--color-texto-claro); margin-bottom: 6px; display: inline-block; }
-.pagina-principal .Contacto .field input,
-.pagina-principal .Contacto .field textarea { width: 100%; background: var(--color-fondo); color: var(--color-texto-oscuro); border: 2px solid var(--color-primario); border-radius: 12px; padding: 12px 14px; font-size: 16px; box-shadow: 0 3px 10px rgba(0,0,0,.06); transition: border-color .2s ease, box-shadow .2s ease; }
-.pagina-principal .Contacto .field input::placeholder,
-.pagina-principal .Contacto .field textarea::placeholder { color: #7a6a65; opacity: .9; }
-.pagina-principal .Contacto .field input:focus,
-.pagina-principal .Contacto .field textarea:focus { outline: none; border-color: var(--color-primario-oscuro); box-shadow: 0 0 0 3px rgba(117,88,80,.15); }
-.pagina-principal .Contacto .row.terms { margin-top: 4px; margin-bottom: 12px; }
-.pagina-principal .Contacto .checkbox { display: flex; align-items: center; gap: 8px; color: var(--color-texto-claro); font-size: 14px; }
-.pagina-principal .Contacto .btn-submit { background: var(--color-texto-oscuro); color: var(--color-texto-claro); border: none; border-radius: 12px; padding: 12px 22px; font-weight: 700; letter-spacing: .3px; cursor: pointer; transition: background-color .2s ease, box-shadow .2s ease, transform .06s ease; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
-.pagina-principal .Contacto .btn-submit:hover { background: var(--color-texto-oscuro-hover); box-shadow: 0 8px 18px rgba(0,0,0,.24); }
-.pagina-principal .Contacto .btn-submit:active { transform: translateY(1px); }
-@media (max-width: 768px) { .pagina-principal .Contacto .row.two { grid-template-columns: 1fr; gap: 12px; } }
-.pagina-principal .Contacto label {
-  color: var(--color-texto-claro);
-  font-size: 20px;
-  align-self: center;
-}
-
-.pagina-principal .crear-articulo-cta {
-  text-align: center;
-  padding: 40px 20px;
-  margin-top: 20px; 
-}
-
-.pagina-principal .btn-crear-articulo {
-  background: var(--color-primario-oscuro);
-  color: var(--color-texto-claro);
-  border: none;
-  border-radius: 12px;
-  padding: 14px 28px;
-  font-weight: 700;
-  font-size: 20px;
-  text-decoration: none;
-  letter-spacing: .3px;
-  cursor: pointer;
-  transition: background-color .2s ease, box-shadow .2s ease, transform .06s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,.16);
-}
-
-.pagina-principal .btn-crear-articulo:hover {
-  background: var(--color-texto-oscuro-hover);
-  box-shadow: 0 8px 18px rgba(0,0,0,.20);
-}
-
-.pagina-principal .btn-crear-articulo:active {
-  transform: translateY(1px);
-}
-
-.pagina-principal .Contacto input,
-.pagina-principal .Contacto textarea {
-  width: 40%;
-  padding: 10px;
-  border: 2px solid var(--color-texto-claro);
-  border-radius: 10px;
-  font-size: 18px;
-  outline: none;
-  resize: none;
-}
-.pagina-principal .Contacto button {
-  background: var(--color-texto-oscuro);
-  font-style: italic;
-  color: var(--color-texto-claro);
-  border: none;
-  padding: 10px 30px;
-  font-size: 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color .3s ease;
-}
-.pagina-principal .Contacto button:hover {
-  background: var(--color-texto-oscuro-hover);
-}
 .pagina-principal .Contacto h2 {
   color: var(--color-texto-claro);
   font-size: 50px;
@@ -495,12 +541,74 @@ nav, header, main, footer {
   margin-bottom: 50px;
   animation: aparecer 4s ease-in-out;
 }
+.pagina-principal .Contacto .contact-form { 
+  width: min(820px, 92vw);
+  margin: 0 auto;
+  background: rgba(250,242,225,.06);
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+.pagina-principal .Contacto .row { 
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.pagina-principal .Contacto .row.two { 
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.pagina-principal .Contacto .field label { 
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-texto-claro);
+  margin-bottom: 6px;
+  display: inline-block;
+}
+.pagina-principal .Contacto .field input,
+.pagina-principal .Contacto .field textarea {
+  /* Estilos base de input/textarea ya definidos en 2.2 */
+  border-color: var(--color-primario);
+  box-shadow: 0 3px 10px rgba(0,0,0,.06);
+}
+.pagina-principal .Contacto .row.terms { 
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+.pagina-principal .Contacto .checkbox { 
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-texto-claro);
+  font-size: 14px;
+}
+.pagina-principal .Contacto .btn-submit {
+  /* Estilos base de botón ya definidos en 2.1 */
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+}
+.pagina-principal .Contacto .btn-submit:hover {
+  box-shadow: 0 8px 18px rgba(0,0,0,.24);
+}
+
+/* Botón "Crear Artículo" (si es necesario) */
+.pagina-principal .crear-articulo-cta {
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 20px;
+}
+.pagina-principal .btn-crear-articulo {
+  /* Estilos base de botón ya definidos en 2.1 */
+  padding: 14px 28px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
 
 /* --------------------------------
- 4. Layout Secundario (Resto de páginas)
---------------------------------
-*/
+ 4. LAYOUT SECUNDARIO (pagina-secundaria)
+-------------------------------- */
 
+/* --- 4.1. Nav y Header --- */
 .pagina-secundaria { 
   display: flex;
   flex-direction: column;
@@ -528,7 +636,6 @@ nav, header, main, footer {
   text-decoration: underline;
 }
 
-
 .pagina-secundaria .vol_inicio,
 .pagina-secundaria .vol {
   position: absolute;
@@ -546,12 +653,10 @@ nav, header, main, footer {
   background-color: var(--color-primario-oscuro);
 }
 
-
 .pagina-secundaria header {
   position: relative;
-  height: 200px; 
+  height: 200px;
 }
-
 
 .pagina-secundaria .logo {
   width: 300px;
@@ -562,7 +667,6 @@ nav, header, main, footer {
   z-index: 1;
 }
 
-
 .pagina-secundaria h2 {
   text-align: center;
   color: var(--color-texto-oscuro);
@@ -571,14 +675,9 @@ nav, header, main, footer {
   margin: 140px auto 20px;
 }
 
-/* --------------------------------
- 5. Estilos Específicos de Páginas
---------------------------------
-*/
-
-/* --- Página Artículo (ART1.html) --- */
+/* --- 4.2. Página Artículo (articulo.html) --- */
 .pagina-articulo header {
-  height: 200px; 
+  height: 200px;
 }
 
 .pagina-articulo .logo {
@@ -623,11 +722,6 @@ nav, header, main, footer {
   align-self: center;
   justify-self: center;
 }
-.pagina-articulo .articulo1 h3,
-.pagina-articulo .articulo1 p,
-.pagina-articulo .articulo1 button {
-  justify-self: center;
-}
 .pagina-articulo .articulo1 h3 {
   font-family: var(--font-titulos);
   font-size: 36px;
@@ -654,6 +748,7 @@ nav, header, main, footer {
   margin-top: 6px;
 }
 .pagina-articulo .articulo1 button {
+  /* Botones específicos de esta página (Agregar/Comprar) */
   appearance: none;
   border: none;
   display: inline-flex;
@@ -670,18 +765,6 @@ nav, header, main, footer {
   justify-self: center;
   width: auto;
 }
-.pagina-articulo .articulo1 .btn-agregar {
-  background: var(--color-primario-oscuro);
-}
-.pagina-articulo .articulo1 .btn-agregar:hover {
-  background: #5f4741;
-}
-.pagina-articulo .articulo1 .btn-comprar {
-  background: var(--color-primario);
-}
-.pagina-articulo .articulo1 .btn-comprar:hover {
-  background: #a17669;
-}
 .pagina-articulo .articulo1 button + button {
   margin-left: 12px;
 }
@@ -689,17 +772,15 @@ nav, header, main, footer {
   transform: translateY(1px);
 }
 
-
-/* --- Página Carrito (carrito.html) --- */
-
-.pagina-secundaria .articulos {
+/* --- 4.3. Página Carrito (carrito.html) --- */
+.pagina-secundaria .articulos { /* Contenedor de items en carrito */
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
   margin: 50px;
   justify-items: center;
 }
-.pagina-secundaria .articulos > * { 
+.pagina-secundaria .articulos > * { /* .item-carrito */
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -742,41 +823,31 @@ nav, header, main, footer {
   color: var(--color-texto-claro);
 }
 .pagina-secundaria .articulos input[type=number] {
+  /* Estilos base de input ya definidos en 2.2 */
   position: absolute;
   right: 140px;
   top: 170px;
   font-size: 24px;
   font-weight: bold;
-  color: var(--color-texto-oscuro);
-  background: var(--color-fondo);
-  border: 2px solid var(--color-primario-oscuro);
-  border-radius: 10px;
   padding: 6px 10px;
   width: 110px;
   text-align: center;
 }
-.pagina-secundaria .articulos > * button {
+.pagina-secundaria .articulos > * button { /* Botón 'Eliminar' en carrito */
+  /* Estilos base de botón ya definidos en 2.1 */
   position: absolute;
   bottom: 16px;
-  background-color: var(--color-texto-oscuro);
-  color: var(--color-texto-claro);
-  border: none;
   border-radius: 10px;
   padding: 10px 20px;
   font-size: 16px;
   min-width: 140px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.pagina-secundaria .articulos > * button:hover {
-  background-color: var(--color-texto-oscuro-hover);
 }
 .pagina-secundaria .articulos > * button:last-of-type {
   right: 16px;
 }
-.pagina-secundaria .articulos > * button:nth-last-of-type(2) {
+/* .pagina-secundaria .articulos > * button:nth-last-of-type(2) {
   right: 172px;
-}
+} */
 
 /* Total del Carrito */
 .pagina-secundaria .total {
@@ -795,22 +866,14 @@ nav, header, main, footer {
   justify-content: flex-end;
 }
 .pagina-secundaria .total button {
-  background-color: var(--color-texto-oscuro);
-  color: var(--color-texto-claro);
-  border: none;
+  /* Estilos base de botón ya definidos en 2.1 */
   border-radius: 10px;
   padding: 10px 20px;
   font-size: 16px;
   min-width: 140px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.pagina-secundaria .total button:hover {
-  background-color: var(--color-texto-oscuro-hover);
 }
 
-
-/* --- Página Facturación (facturacion.html) --- */
+/* --- 4.4. Página Facturación (facturacion.html) --- */
 .pagina-secundaria form {
   background: var(--color-primario);
   color: var(--color-texto-claro);
@@ -848,25 +911,10 @@ nav, header, main, footer {
 .pagina-secundaria input[type="password"],
 .pagina-secundaria input[type="number"],
 .pagina-secundaria textarea#articulo {
-  width: 100%;
-  padding: 12px 12px;
+  /* Estilos base de input/textarea ya definidos en 2.2 */
   margin-bottom: 16px;
-  border: 2px solid var(--color-primario-oscuro);
-  border-radius: 12px;
-  font-size: 18px;
-  background: var(--color-fondo);
-  color: var(--color-texto-oscuro);
-  font-family: inherit;
-  transition: box-shadow .2s ease, border-color .2s ease;
-}
-.pagina-secundaria input:focus,
-.pagina-secundaria textarea#articulo:focus {
-  outline: none;
-  border-color: var(--color-primario-oscuro);
-  box-shadow: 0 0 0 3px rgba(117, 88, 80, 0.15);
 }
 
-/* Estilo específico para el textarea del listado de artículos en facturación */
 .pagina-secundaria textarea#articulo {
   resize: vertical;
   min-height: 110px;
@@ -874,36 +922,11 @@ nav, header, main, footer {
   white-space: pre-wrap;
   overflow: auto;
 }
-.pagina-secundaria textarea#articulo::placeholder {
-  color: #7a6a65;
-  opacity: .9;
-  font-style: italic;
-}
-.pagina-secundaria textarea#articulo:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(117, 88, 80, 0.15);
-}
 .pagina-secundaria button[type="submit"] {
-  background-color: var(--color-texto-oscuro);
-  color: var(--color-texto-claro);
-  border: none;
-  border-radius: 12px;
+  /* Estilos base de botón ya definidos en 2.1 */
   padding: 14px 28px;
   font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
   margin-top: 12px;
-  transition: background-color .2s ease, box-shadow .2s ease, transform .06s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,.16);
-  letter-spacing: .3px;
-}
-.pagina-secundaria button[type="submit"]:hover {
-  background-color: var(--color-texto-oscuro-hover);
-  box-shadow: 0 8px 18px rgba(0,0,0,.20);
-}
-.pagina-secundaria button[type="submit"]:active { transform: translateY(1px); }
-.pagina-secundaria button[type="submit"]:hover {
-  background-color: var(--color-texto-oscuro-hover);
 }
 .pagina-secundaria form h3 { /* Total en formulario */
   text-align: right;
@@ -913,7 +936,7 @@ nav, header, main, footer {
   margin-bottom: 0;
 }
 
-/* --- Página Compra Lista (compra_lista.html) --- */
+/* --- 4.5. Página Compra Lista (compra_lista.html) --- */
 .pagina-secundaria .formulario-compra { 
   display: flex;
   flex-direction: column;
@@ -943,6 +966,7 @@ nav, header, main, footer {
   margin-bottom: 24px;
 }
 .pagina-secundaria .formulario-compra button {
+  /* Botón específico de esta página */
   background-color: var(--color-texto-oscuro);
   color: var(--color-texto-claro);
   border: none;
@@ -959,37 +983,195 @@ nav, header, main, footer {
   background-color: var(--color-texto-oscuro-hover);
 }
 
-.pagina-secundaria button[type="submit"] {
-  background-color: var(--color-texto-oscuro);
+
+/* --------------------------------
+ 5. SECCIONES DE ADMIN
+-------------------------------- */
+
+/* --- 5.1. Lista de Artículos (Admin) --- */
+#admin-list-section {
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+#admin-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-list-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  background: var(--color-primario, #fff);
+  color: var(--color-texto-claro, #222);
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.admin-list-empty {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: var(--color-texto-oscuro);
+}
+
+.admin-item-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  border: 1px solid rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+
+.admin-item-info {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 150px;
+}
+.admin-item-info h4,
+.admin-item-info p {
+  margin: 0;
+  padding: 0;
+}
+.admin-item-info .admin-item-title {
+  font-size: 18px;
+  font-weight: 700;
   color: var(--color-texto-claro);
+}
+.admin-item-info .admin-item-precio {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-texto-oscuro);
+}
+.admin-item-info .admin-item-stock {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.admin-item-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-grow: 1;
+  flex-basis: 180px;
+}
+
+.admin-item-actions button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: var(--color-boton, #333);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.admin-item-actions button:active {
+  transform: scale(0.96);
+}
+
+.admin-item-actions .btn-delete { background: #c0392b; }
+.admin-item-actions .btn-delete:hover { background: #a93226; }
+.admin-item-actions .btn-edit { background: #362209; }
+.admin-item-actions .btn-edit:hover { background: #5a3a12; }
+
+/* --- 5.2. Modal Edición (Admin) --- */
+#modal-editar-articulo {
   border: none;
   border-radius: 12px;
-  padding: 14px 28px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  max-width: 600px;
+  width: 90vw;
+  background: var(--color-fondo);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+}
+
+#modal-editar-articulo::backdrop {
+  /* Puedes añadir un fondo oscuro aquí, ej:
+     background: rgba(0, 0, 0, 0.5); 
+     backdrop-filter: blur(4px);
+  */
+}
+
+#modal-editar-articulo .modal-contenido {
+  position: relative;
+  background: var(--color-primario);
+  color: var(--color-texto-claro);
+  border-radius: 12px;
+  padding: 32px 36px;
+  font-size: 18px;
+}
+
+#modal-editar-articulo fieldset {
+  border-color: var(--color-texto-claro);
+  margin-bottom: 0;
+}
+#modal-editar-articulo legend {
+  color: var(--color-texto-oscuro);
+}
+#modal-editar-articulo label {
+  color: var(--color-texto-claro);
+}
+
+#modal-editar-articulo input[type="text"],
+#modal-editar-articulo input[type="number"],
+#modal-editar-articulo textarea {
+  /* Estilos base de input/textarea ya definidos en 2.2 */
+  margin-bottom: 16px;
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-texto-oscuro);
+  color: var(--color-texto-claro);
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.btn-close-modal:hover {
+  background: var(--color-texto-oscuro-hover);
+}
+
+#btn-guardar-cambios {
+  /* Estilos base de botón ya definidos en 2.1 */
+  font-size: 20px;
   margin-top: 12px;
-  transition: background-color .2s ease, box-shadow .2s ease, transform .06s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,.16);
-  letter-spacing: .3px;
 }
-.pagina-secundaria button[type="submit"]:hover {
-  background-color: var(--color-texto-oscuro-hover);
-  box-shadow: 0 8px 18px rgba(0,0,0,.20);
-}
-.pagina-secundaria button[type="submit"]:active { 
-  transform: translateY(1px); 
-}
-
-
 
 /* --------------------------------
- 6. Media Queries (Responsivo)
---------------------------------
-*/
+ 6. MEDIA QUERIES (Responsivo)
+-------------------------------- */
 
-/* --- Tablet Grande (Específico de art.css) --- */
+/* --- 6.1. Tablet Grande (~1200px) --- */
 @media (max-width: 1200px) and (min-width: 901px) {
+  /* Página Artículo */
   .pagina-articulo .articulo1 {
     max-width: 900px;
     margin: 40px auto;
@@ -1019,7 +1201,6 @@ nav, header, main, footer {
     right: 24px;
     width: 60px;
     height: 60px;
-    background-color: var(--color-primario);
     z-index: 100;
     display: flex;
     align-items: center;
@@ -1028,11 +1209,10 @@ nav, header, main, footer {
   }
   .pagina-articulo .carrito img {
     width: 40px;
-    height: auto;
   }
 }
 
-/* --- Tablet (General) --- */
+/* --- 6.2. Tablet (~1024px) --- */
 :focus-visible {
   outline: 3px solid rgba(117, 88, 80, 0.35);
   outline-offset: 2px;
@@ -1040,6 +1220,7 @@ nav, header, main, footer {
 
 @media (max-width: 1024px) {
   
+  /* Layout Principal */
   .pagina-principal .logo,
   .pagina-principal .ghost-main {
     display: none;
@@ -1057,45 +1238,23 @@ nav, header, main, footer {
   .pagina-principal .presentation h2 {
     position: static;
     transform: none;
-    text-align: center;
-    width: auto;
   }
   .pagina-principal .presentation h1 {
-    margin: 0;
     font-size: 70px;
   }
   .pagina-principal .presentation h2 {
-    margin-top: 10px;
     font-size: 32px;
   }
   .pagina-principal .articulos {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
-    justify-items: center;
   }
-  .pagina-principal .aside-filtros { width: 220px; }
   .pagina-principal .item {
-    transform: scale(.9);
     max-width: 320px;
     padding: 8px;
   }
-  .pagina-principal .item h3 a {
-    font-size: 26px;
-  }
-  .pagina-principal .item p {
-    font-size: 18px;
-  }
-  .pagina-principal .item button {
-    font-size: 14px;
-    padding: 8px 18px;
-  }
-  .pagina-principal .item:hover {
-    transform: scale(.98);
-  }
   .pagina-principal .item img {
-    width: 85%;
     max-height: 220px;
-    margin-bottom: 8px;
   }
 
   /* Layout Secundario */
@@ -1116,78 +1275,36 @@ nav, header, main, footer {
   /* Carrito */
   .pagina-secundaria .total {
     max-width: 860px;
-    margin: 14px auto 20px;
     justify-content: space-between;
-  }
-  .pagina-secundaria .total button {
-    font-size: 15px;
-    min-width: 130px;
-    padding: 8px 16px;
   }
   .pagina-secundaria .articulos img {
     flex-basis: 170px;
     width: 170px;
   }
-  .pagina-secundaria .articulos h3 {
-    font-size: 28px;
-  }
-  .pagina-secundaria .articulos p {
-    font-size: 17px;
-  }
-  .pagina-secundaria .articulos #precio {
-    font-size: 22px;
-  }
-  .pagina-secundaria .articulos input[type=number] {
-    font-size: 22px;
-    width: 100px;
-  }
-  .pagina-secundaria .articulos > * button {
-    font-size: 15px;
-    min-width: 130px;
-  }
   
   /* Facturación */
   .pagina-secundaria form {
     max-width: 420px;
-    padding: 24px 12px;
     font-size: 16px;
   }
-  .pagina-secundaria legend {
-    font-size: 18px;
-  }
-  .pagina-secundaria button[type="submit"] {
-    font-size: 17px;
-    padding: 10px 20px;
-  }
-
+ 
   /* Compra Lista */
   .pagina-secundaria .formulario-compra section {
     max-width: 420px;
-    padding: 24px 12px;
     font-size: 16px;
-  }
-  .pagina-secundaria .formulario-compra h3 {
-    font-size: 22px;
-  }
-  .pagina-secundaria .formulario-compra button {
-    font-size: 17px;
-    padding: 10px 20px;
   }
 }
 
-/* --- Tablet Pequeña (Específico de art.css) --- */
+/* --- 6.3. Tablet Pequeña (~900px) --- */
 @media (max-width: 900px) {
+  /* Página Artículo */
   .pagina-articulo .articulo1 {
     grid-template-columns: 1fr;
-    gap: 14px 0;
     margin: 24px 12px;
     padding: 16px;
-    justify-items: center;
   }
   .pagina-articulo .articulo1 img {
     grid-column: 1;
-    grid-row: auto;
-    align-self: center;
     max-width: 100%;
   }
   .pagina-articulo .articulo1 h3,
@@ -1207,31 +1324,27 @@ nav, header, main, footer {
   }
   .pagina-articulo .carrito {
     position: fixed;
-    top: 800px; 
+    top: 800px;
     right: 16px;
     width: 60px;
     height: 70px;
-    background-color: var(--color-primario);
     z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   }
   .pagina-articulo .carrito img {
     width: 80px;
-    height: auto;
   }
 }
 
-/* --- Celular (General) --- */
+/* --- 6.4. Celular (~768px) --- */
 @media (max-width: 768px) {
  
-  .pagina-principal .Contacto { padding: 36px 16px; }
-  .pagina-principal .Contacto h2 { text-align: center; }
-  .pagina-principal .Contacto .contact-form { width: 100%; margin: 0 auto; }
-
- 
+  /* Layout Principal */
+  .pagina-principal .Contacto { 
+    padding: 36px 16px;
+  }
+  .pagina-principal .Contacto .contact-form { 
+    width: 100%;
+  }
   .pagina-principal .logo,
   .pagina-principal .ghost-main {
     display: none;
@@ -1245,9 +1358,7 @@ nav, header, main, footer {
   .pagina-principal .nav-right {
     position: static;
     transform: none;
-    margin: 10px 0;
     height: auto;
-    line-height: normal;
   }
   .pagina-principal nav ul {
     flex-direction: column;
@@ -1260,15 +1371,11 @@ nav, header, main, footer {
   .pagina-principal .presentation h2 {
     position: static;
     transform: none;
-    text-align: center;
-    width: auto;
   }
   .pagina-principal .presentation h1 {
-    margin: 0;
     font-size: 50px;
   }
   .pagina-principal .presentation h2 {
-    margin-top: 8px;
     font-size: 26px;
   }
   .pagina-principal .quienes-somos {
@@ -1283,34 +1390,18 @@ nav, header, main, footer {
   }
   .pagina-principal .articulos {
     grid-template-columns: 1fr;
-    gap: 12px;
-    justify-items: center;
   }
-  .pagina-principal main { flex-direction: column; }
-  .pagina-principal .aside-filtros { width: 100%; position: static; }
-  .pagina-principal #toggle-aside:checked ~ .aside-header + .aside-content { max-height: 500px; }
+  .pagina-principal main { 
+    flex-direction: column;
+  }
+  .pagina-principal .aside-filtros { 
+    width: 100%;
+  }
   .pagina-principal .item {
-    padding: 8px;
-    transform: scale(.85);
     max-width: 300px;
   }
-  .pagina-principal .item h3 a {
-    font-size: 20px;
-  }
-  .pagina-principal .item p {
-    font-size: 14px;
-  }
-  .pagina-principal .item button {
-    font-size: 13px;
-    padding: 6px 16px;
-  }
-  .pagina-principal .item:hover {
-    transform: scale(.96);
-  }
   .pagina-principal .item img {
-    width: 80%;
     max-height: 180px;
-    margin-bottom: 6px;
   }
   .pagina-principal .articles {
     font-size: 28px;
@@ -1327,7 +1418,6 @@ nav, header, main, footer {
   .pagina-secundaria .vol {
     position: static;
     transform: none;
-    margin: 10px 0;
   }
   .pagina-secundaria nav ul {
     flex-direction: column;
@@ -1340,30 +1430,19 @@ nav, header, main, footer {
 
   /* Carrito */
   .pagina-secundaria .total {
-    max-width: none;
     width: auto;
     margin: 12px 4vw 18px;
-    justify-content: space-between;
-    padding: 10px 12px;
-  }
-  .pagina-secundaria .total button {
-    min-width: 120px;
-    font-size: 15px;
-    padding: 8px 14px;
   }
   .pagina-secundaria .articulos {
-    gap: 16px;
     margin: 20px;
   }
   .pagina-secundaria .articulos > * {
     display: block;
-    padding: 14px;
   }
   .pagina-secundaria .articulos img {
     display: block;
     margin: 0 auto 10px;
     width: 65vw;
-    max-width: 280px;
   }
   .pagina-secundaria .articulos #cantidad-label,
   .pagina-secundaria .articulos input[type=number],
@@ -1372,8 +1451,6 @@ nav, header, main, footer {
   }
   .pagina-secundaria .articulos #cantidad-label {
     display: block;
-    text-align: right;
-    margin: 6px 0 4px;
   }
   .pagina-secundaria .articulos input[type=number] {
     display: block;
@@ -1381,8 +1458,6 @@ nav, header, main, footer {
   }
   .pagina-secundaria .articulos > * button {
     display: inline-block;
-    margin-top: 10px;
-    margin-left: 8px;
     float: right;
   }
   .pagina-secundaria .articulos > *::after {
@@ -1394,253 +1469,26 @@ nav, header, main, footer {
   /* Facturación */
   .pagina-secundaria form {
     max-width: 98vw;
-    padding: 12px 4vw;
-    font-size: 15px;
-  }
-  .pagina-secundaria legend {
-    font-size: 16px;
-  }
-  .pagina-secundaria button[type="submit"] {
-    font-size: 15px;
-    padding: 8px 14px;
   }
 
   /* Compra Lista */
   .pagina-secundaria .formulario-compra section {
     max-width: 98vw;
-    padding: 12px 4vw;
-    font-size: 15px;
-  }
-  .pagina-secundaria .formulario-compra h3 {
-    font-size: 18px;
-  }
-  .pagina-secundaria .formulario-compra button {
-    font-size: 15px;
-    padding: 8px 14px;
   }
 }
 
-
-/* --- Estilos para la lista de admin (nueva) --- */
-#admin-list-section {
-  width: 100%;
-  max-width: 900px; /* Un ancho más razonable */
-  margin: 20px auto;
-  padding: 0 16px;
-}
-
-#admin-list {
-  list-style: none; /* Quita los números del <ol> */
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px; /* Espacio entre items */
-}
-
-/* Estilo para el ítem de la lista */
-.admin-list-item {
-  display: flex;
-  flex-wrap: wrap; /* Permite que se reordene en móviles */
-  align-items: center;
-  gap: 16px;
-  background: var(--color-primario, #fff);
-  color: var(--color-texto-claro, #222);
-  border-radius: 10px;
-  padding: 12px 16px;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
-  overflow: hidden;
-}
-
-/* Mensaje de lista vacía */
-.admin-list-empty {
-  text-align: center;
-  padding: 20px;
-  font-style: italic;
-  color: var(--color-texto-oscuro);
-}
-
-/* 1. Imagen (Izquierda) */
-.admin-item-img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
-  display: block;
-  border: 1px solid rgba(0,0,0,0.06);
-  flex-shrink: 0; /* Evita que la imagen se encoja */
-}
-
-/* 2. Info (Centro) */
-.admin-item-info {
-  flex: 1 1 200px; /* Crece para ocupar el espacio, base de 200px */
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 150px; /* Evita que se comprima demasiado */
-}
-.admin-item-info h4,
-.admin-item-info p {
-  margin: 0;
-  padding: 0;
-}
-.admin-item-info .admin-item-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--color-texto-claro);
-}
-.admin-item-info .admin-item-precio {
-  font-weight: 600;
-  font-size: 16px;
-  color: var(--color-texto-oscuro); /* Más contraste para el precio */
-}
-.admin-item-info .admin-item-stock {
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-/* 3. Acciones (Derecha) */
-.admin-item-actions {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-  flex-grow: 1; /* Crece para llenar espacio en móviles */
-  flex-basis: 180px; /* Asegura espacio para los 2 botones */
-}
-
-.admin-item-actions button {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  background: var(--color-boton, #333);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-.admin-item-actions button:active {
-  transform: scale(0.96);
-}
-
-.admin-item-actions .btn-delete { background: #c0392b; }
-.admin-item-actions .btn-delete:hover { background: #a93226; }
-.admin-item-actions .btn-edit { background: #362209; }
-.admin-item-actions .btn-edit:hover { background: #5a3a12; }
-
-
-#modal-editar-articulo {
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  padding: 0;
-  max-width: 600px;
-  width: 90vw;
-  background: var(--color-fondo);
-  position: fixed; 
-  top: 50%;        
-  left: 50%; 
-  transform: translate(-50%, -50%); 
-  margin: 0;      
-}
-
-
-#modal-editar-articulo::backdrop {
-
-}
-
-#modal-editar-articulo .modal-contenido {
-  position: relative;
-  background: var(--color-primario);
-  color: var(--color-texto-claro);
-  border-radius: 12px;
-  padding: 32px 36px;
-  font-size: 18px;
-}
-
-#modal-editar-articulo fieldset {
-  border-color: var(--color-texto-claro);
-  margin-bottom: 0;
-}
-#modal-editar-articulo legend {
-  color: var(--color-texto-oscuro);
-}
-#modal-editar-articulo label {
-  color: var(--color-texto-claro);
-}
-
-
-#modal-editar-articulo input[type="text"],
-#modal-editar-articulo input[type="number"],
-#modal-editar-articulo textarea {
-  width: 100%;
-  padding: 12px 12px;
-  margin-bottom: 16px;
-  border: 2px solid var(--color-primario-oscuro);
-  border-radius: 12px;
-  font-size: 18px;
-  background: var(--color-fondo);
-  color: var(--color-texto-oscuro);
-  font-family: inherit;
-}
-
-
-.btn-close-modal {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 50%;
-  background: var(--color-texto-oscuro);
-  color: var(--color-texto-claro);
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-.btn-close-modal:hover {
-  background: var(--color-texto-oscuro-hover);
-}
-
-
-#btn-guardar-cambios {
-  background-color: var(--color-texto-oscuro);
-  color: var(--color-texto-claro);
-  border: none;
-  border-radius: 12px;
-  padding: 14px 28px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 12px;
-  transition: background-color .2s ease, box-shadow .2s ease, transform .06s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,.16);
-}
-
-
-
-#btn-guardar-cambios:hover {
-  background-color: var(--color-texto-oscuro-hover);
-}
-
-
+/* --- 6.5. Celular Pequeño (~600px) --- */
 @media (max-width: 600px) {
+  /* Admin */
   .admin-list-item {
-    gap: 12px; 
+    gap: 12px;
   }
   .admin-item-info {
-
-    flex-basis: calc(100% - 92px); 
+    flex-basis: calc(100% - 92px);
   }
   .admin-item-actions {
-
     flex-basis: 100%;
     justify-content: flex-start;
-    gap: 10px;
-    padding-top: 10px;
-    margin-top: 10px;
     border-top: 1px solid rgba(250, 242, 225, 0.2);
   }
 }

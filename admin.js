@@ -1,17 +1,60 @@
+/*
+========================================
+ ÍNDICE DE SCRIPT (admin.js)
+========================================
+
+ 1. CONFIGURACIÓN E IMPORTACIONES
+    - Constantes de Airtable
+
+ 2. ESTADO GLOBAL Y SELECTORES DOM
+    - Variables globales (p.ej. `currentEditRecordId`)
+    - Selectores de elementos del DOM (formularios, modales, etc.)
+
+ 3. FUNCIONES HELPERS (Utilidades)
+    - `safeParseInt`
+    - `findAttachmentUrl`, `getImageUrl` (Airtable helpers)
+    - `escapeHtml`
+
+ 4. LÓGICA DE DATOS (FETCH Y RENDER)
+    - `fetchRecords` (GET de todos los artículos)
+    - `renderList` (Dibuja la lista de artículos en el DOM)
+    - `loadAndRender` (Coordina el fetch y el render)
+
+ 5. MANEJADORES DE ACCIONES (CRUD)
+    - `onDeleteClick` (Manejador para el botón Eliminar)
+    - `onEditClick` (Manejador para el botón Editar, abre el modal)
+
+ 6. INICIALIZACIÓN Y EVENT LISTENERS
+    - Listener para el formulario de CREAR (POST)
+    - Listener para el formulario de EDITAR (PATCH)
+    - Listeners para cerrar el modal
+    - Punto de entrada (Llamada inicial a `loadAndRender`)
+
+========================================
+*/
+
+// ----------------------------------------
+// 1. CONFIGURACIÓN E IMPORTACIONES
+// ----------------------------------------
 import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
 
 const airtableToken = AIRTABLE_TOKEN;
 const airtableUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;
 
+// ----------------------------------------
+// 2. ESTADO GLOBAL Y SELECTORES DOM
+// ----------------------------------------
 const adminListEl = document.getElementById('admin-list');
 const formCreateEl = document.getElementById('form-crear-articulo');
-
 
 const modalEditEl = document.getElementById('modal-editar-articulo');
 const formEditEl = document.getElementById('form-editar-articulo');
 const btnCerrarModalEl = document.getElementById('btn-cerrar-modal');
 let currentEditRecordId = null;
 
+// ----------------------------------------
+// 3. FUNCIONES HELPERS (Utilidades)
+// ----------------------------------------
 function safeParseInt(v, fallback = 0) { const n = parseInt(v, 10); return Number.isFinite(n) ? n : fallback; }
 
 function findAttachmentUrl(fields) {
@@ -35,6 +78,15 @@ function getImageUrl(fields) {
   return findAttachmentUrl(fields) || '';
 }
 
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+// ----------------------------------------
+// 4. LÓGICA DE DATOS (FETCH Y RENDER)
+// ----------------------------------------
+
+/** Obtiene todos los artículos de Airtable */
 async function fetchRecords() {
   const res = await fetch(airtableUrl, { headers: { Authorization: `Bearer ${airtableToken}` } });
   if (!res.ok) throw new Error('Airtable fetch error ' + res.status);
@@ -42,10 +94,7 @@ async function fetchRecords() {
   return json.records || [];
 }
 
-function escapeHtml(s) {
-  return String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-}
-
+/** Dibuja la lista de artículos en el DOM */
 function renderList(records) {
   if (!adminListEl) return;
   adminListEl.innerHTML = '';
@@ -81,10 +130,27 @@ function renderList(records) {
     adminListEl.appendChild(li);
   });
 
+  // Asigna los listeners a los botones recién creados
   adminListEl.querySelectorAll('.btn-delete').forEach(b => b.addEventListener('click', onDeleteClick));
   adminListEl.querySelectorAll('.btn-edit').forEach(b => b.addEventListener('click', onEditClick));
 }
 
+/** Función coordinadora: Llama a fetchRecords y luego a renderList */
+async function loadAndRender() {
+  try {
+    const records = await fetchRecords();
+    renderList(records);
+  } catch (err) {
+    console.error('Error cargando lista admin:', err);
+    if (adminListEl) adminListEl.innerHTML = `<p>Error cargando datos: ${escapeHtml(err.message)}</p>`;
+  }
+}
+
+// ----------------------------------------
+// 5. MANEJADORES DE ACCIONES (CRUD)
+// ----------------------------------------
+
+/** Maneja el clic en "Eliminar" */
 async function onDeleteClick(e) {
   const id = e.target.dataset.id;
   if (!confirm('Eliminar registro?')) return;
@@ -100,13 +166,13 @@ async function onDeleteClick(e) {
   }
 }
 
-
+/** Maneja el clic en "Editar" */
 async function onEditClick(e) {
   const id = e.target.dataset.id;
   currentEditRecordId = id; 
   
   try {
-
+    // 1. Obtener los datos actuales del registro
     const url = `${airtableUrl}/${id}`;
     const res = await fetch(url, { headers: { Authorization: `Bearer ${airtableToken}` } });
     if (!res.ok) throw new Error('Fetch record failed ' + res.status);
@@ -114,7 +180,7 @@ async function onEditClick(e) {
     const json = await res.json();
     const fields = json.fields || {};
 
-  
+    // 2. Rellenar el formulario del modal con esos datos
     if (formEditEl) {
       formEditEl.querySelector('#edit-articulo-titulo').value = fields.titulo || '';
       formEditEl.querySelector('#edit-articulo-descripcion-corta').value = fields.descripcionCorta || '';
@@ -122,13 +188,12 @@ async function onEditClick(e) {
       formEditEl.querySelector('#edit-articulo-precio').value = fields.precio || 0;
       formEditEl.querySelector('#edit-articulo-stock').value = fields.stock || 0;
       
-     
       const imgField = fields.imgSrc; 
       const currentImgUrl = (Array.isArray(imgField) && imgField.length > 0) ? imgField[0].url : '';
       formEditEl.querySelector('#edit-articulo-imagen').value = currentImgUrl;
     }
 
-
+    // 3. Mostrar el modal
     if (modalEditEl) modalEditEl.showModal();
 
   } catch (err) {
@@ -138,22 +203,16 @@ async function onEditClick(e) {
   }
 }
 
+// ----------------------------------------
+// 6. INICIALIZACIÓN Y EVENT LISTENERS
+// ----------------------------------------
 
-async function loadAndRender() {
-  try {
-    const records = await fetchRecords();
-    renderList(records);
-  } catch (err) {
-    console.error('Error cargando lista admin:', err);
-    if (adminListEl) adminListEl.innerHTML = `<p>Error cargando datos: ${escapeHtml(err.message)}</p>`;
-  }
-}
-
-
+/** Listener para el formulario de CREAR (POST) */
 if (formCreateEl) {
   formCreateEl.addEventListener('submit', async (ev) => {
     ev.preventDefault();
 
+    // 1. Obtener datos del formulario
     const titulo = formCreateEl.querySelector('#articulo-titulo')?.value?.trim();
     const descripcionCorta = formCreateEl.querySelector('#articulo-descripcion-corta')?.value?.trim();
     const descripcionLarga = formCreateEl.querySelector('#articulo-descripcion-larga')?.value?.trim();
@@ -163,6 +222,7 @@ if (formCreateEl) {
 
     if (!titulo) { alert('Título requerido'); return; }
 
+    // 2. Preparar el body para Airtable
     const body = {
       fields: {
         titulo: titulo,
@@ -177,6 +237,7 @@ if (formCreateEl) {
       body.fields.imgSrc = [{ url: imagen }];
     }
 
+    // 3. Enviar a Airtable
     try {
       const res = await fetch(airtableUrl, {
         method: 'POST',
@@ -197,7 +258,7 @@ if (formCreateEl) {
   });
 }
 
-
+/** Listener para el formulario de EDITAR (PATCH) */
 if (formEditEl) {
   formEditEl.addEventListener('submit', async (ev) => {
     ev.preventDefault();
@@ -206,7 +267,7 @@ if (formEditEl) {
       return;
     }
 
-    
+    // 1. Obtener datos del formulario
     const titulo = formEditEl.querySelector('#edit-articulo-titulo')?.value?.trim();
     const descripcionCorta = formEditEl.querySelector('#edit-articulo-descripcion-corta')?.value?.trim();
     const descripcionLarga = formEditEl.querySelector('#edit-articulo-descripcion-larga')?.value?.trim();
@@ -214,6 +275,7 @@ if (formEditEl) {
     const stock = safeParseInt(formEditEl.querySelector('#edit-articulo-stock')?.value || 0, 0);
     const imagen = formEditEl.querySelector('#edit-articulo-imagen')?.value?.trim();
 
+    // 2. Preparar el body para Airtable
     const body = {
       fields: {
         titulo: titulo,
@@ -223,11 +285,10 @@ if (formEditEl) {
         stock: stock
       }
     };
-
     
     body.fields.imgSrc = imagen ? [{ url: imagen }] : null;
 
-
+    // 3. Enviar a Airtable (PATCH)
     try {
       const url = `${airtableUrl}/${currentEditRecordId}`;
       const res = await fetch(url, {
@@ -254,14 +315,14 @@ if (formEditEl) {
   });
 }
 
-
+/** Listeners para cerrar el modal */
 if (btnCerrarModalEl) {
   btnCerrarModalEl.addEventListener('click', () => {
     if (modalEditEl) modalEditEl.close();
   });
 }
 
-
+// Cerrar el modal si se hace clic fuera de él (en el ::backdrop)
 if (modalEditEl) {
     modalEditEl.addEventListener('click', (e) => {
         if (e.target === modalEditEl) {
@@ -270,7 +331,5 @@ if (modalEditEl) {
     });
 }
 
-
-
-
+/** Punto de entrada: Cargar y renderizar la lista al iniciar */
 loadAndRender();
