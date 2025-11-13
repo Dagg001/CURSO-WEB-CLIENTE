@@ -1551,7 +1551,6 @@ nav, header, main, footer {
 
 #modal-editar-articulo .modal-contenido {
   position: relative;
-  /* Reutilizamos los estilos del form de facturación */
   background: var(--color-primario);
   color: var(--color-texto-claro);
   border-radius: 12px;
@@ -1570,7 +1569,7 @@ nav, header, main, footer {
   color: var(--color-texto-claro);
 }
 
-/* Inputs del modal (reutiliza estilos de facturación) */
+
 #modal-editar-articulo input[type="text"],
 #modal-editar-articulo input[type="number"],
 #modal-editar-articulo textarea {
@@ -1585,7 +1584,7 @@ nav, header, main, footer {
   font-family: inherit;
 }
 
-/* Botón de cerrar 'X' */
+
 .btn-close-modal {
   position: absolute;
   top: 12px;
@@ -1605,7 +1604,7 @@ nav, header, main, footer {
   background: var(--color-texto-oscuro-hover);
 }
 
-/* Botón Guardar Cambios (reutiliza estilo submit) */
+
 #btn-guardar-cambios {
   background-color: var(--color-texto-oscuro);
   color: var(--color-texto-claro);
@@ -1619,21 +1618,24 @@ nav, header, main, footer {
   transition: background-color .2s ease, box-shadow .2s ease, transform .06s ease;
   box-shadow: 0 4px 12px rgba(0,0,0,.16);
 }
+
+
+
 #btn-guardar-cambios:hover {
   background-color: var(--color-texto-oscuro-hover);
 }
 
-/* Media query para ajustar en móviles */
+
 @media (max-width: 600px) {
   .admin-list-item {
-    gap: 12px; /* Reduce el gap */
+    gap: 12px; 
   }
   .admin-item-info {
-    /* La info toma todo el ancho menos la imagen */
-    flex-basis: calc(100% - 92px); /* 80px img + 12px gap */
+
+    flex-basis: calc(100% - 92px); 
   }
   .admin-item-actions {
-    /* Los botones van abajo */
+
     flex-basis: 100%;
     justify-content: flex-start;
     gap: 10px;

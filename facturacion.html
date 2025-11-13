@@ -26,45 +26,45 @@
 </header>
 
 <main>
-    <form action="compra_lista.html" method="post">
+    <form id="factura-form">
     <fieldset>
       <legend>Datos del Comprador</legend>
       <label for="nombre">Nombre completo:</label>
-      <input type="text" id="nombre" name="nombre" required><br><br>
+      <input type="text" id="nombre" name="nombre" required>
 
       <label for="email">Correo electrónico:</label>
-      <input type="email" id="email" name="email" required><br><br>
+      <input type="email" id="email" name="email" required>
 
       <label for="direccion">Dirección de envío:</label>
-      <input type="text" id="direccion" name="direccion" required><br><br>
+      <input type="text" id="direccion" name="direccion" required>
 
       <label for="telefono">Teléfono:</label>
-      <input type="tel" id="telefono" name="telefono" required><br><br>
+      <input type="tel" id="telefono" name="telefono" required>
     </fieldset>
 
     <fieldset>
       <legend>Datos de la Tarjeta</legend>
       <label for="tarjeta">Número de tarjeta:</label>
-      <input type="text" id="tarjeta" name="tarjeta" maxlength="16" required><br><br>
+      <input type="text" id="tarjeta" name="tarjeta" maxlength="16" required>
 
       <label for="nombre_tarjeta">Nombre en la tarjeta:</label>
-      <input type="text" id="nombre_tarjeta" name="nombre_tarjeta" required><br><br>
+      <input type="text" id="nombre_tarjeta" name="nombre_tarjeta" required>
 
       <label for="expiracion">Fecha de expiración:</label>
-      <input type="month" id="expiracion" name="expiracion" required><br><br>
+      <input type="month" id="expiracion" name="expiracion" required>
 
       <label for="cvv">CVV:</label>
-      <input type="password" id="cvv" name="cvv" maxlength="4" required><br><br>
+      <input type="password" id="cvv" name="cvv" maxlength="4" required>
     </fieldset>
 
 <fieldset>
   <legend>Artículo</legend>
   <label for="articulo">Nombre del artículo:</label>
-  <textarea id="articulo" name="articulo" rows="4" placeholder="Listado de artículos" readonly style="width:100%"></textarea><br><br>
+  <textarea id="articulo" name="articulo" rows="4" placeholder="Listado de artículos" readonly style="width:100%"></textarea>
   <h3>Total: $0.00</h3>
 </fieldset>
 
-    <button link="./compra_lista.html" type="submit">Realizar compra</button>
+    <button type="submit">Realizar compra</button>
   </form>
 </main>
   

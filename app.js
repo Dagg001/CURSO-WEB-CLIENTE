@@ -1,4 +1,4 @@
-import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME } from './env.js';
+import { AIRTABLE_TOKEN, BASE_ID, TABLE_NAME, TABLE_PEDIDOS_NAME } from './env.js';
 
 const airtableToken = AIRTABLE_TOKEN;
 const baseId = BASE_ID;
@@ -31,7 +31,7 @@ function recordToArticulo(rec) {
   const descripcionCorta = f.descripcionCorta || f.descripcion || f.Descripcion || f.desc || "";
   const descripcionLarga = f.descripcionLarga || f.descripcion_larga || f.larga || descripcionCorta;
   const precio = safeParseFloat(f.precio ?? f.Precio ?? f.price ?? f.Price, 0);
-  const stock = safeParseInt(f.stock ?? f.Stock ?? 0, 0);
+  const stock = safeParseInt(f.stock ?? f.Stock ?? f.StockAvailable ?? 0, 0); // Lee de múltiples campos
 
   let imgSrc = "";
   const attachCandidates = f.imagen || f.imagenes || f.image || f.images || f.img || f.Attachments || f.attachments;
@@ -318,35 +318,82 @@ function initFacturacion() {
   totalElem.textContent = `Total: ${total.toFixed(2)}`;
 }
 
-// 11 - Actualizar stock en Airtable
-function actualizarStockEnAirtable(recordId, nuevoStock) {
+// 11 - Actualizar stock en Airtable (MODIFICADA)
+function actualizarStockEnAirtable(recordId, nuevoStock, fieldName) {
   const url = `${airtableUrl}/${recordId}`;
   const headers = {
     'Authorization': `Bearer ${airtableToken}`,
     'Content-Type': 'application/json'
   };
 
-  function doPatch(fieldName) {
-    const body = { fields: { [fieldName]: Number(nuevoStock) } };
-    return fetch(url, { method: 'PATCH', headers, body: JSON.stringify(body) })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(j => {
-            const err = new Error(`Airtable update error ${res.status}`);
-            err.detail = j;
-            throw err;
-          });
-        }
-        return res.json();
-      });
-  }
-
-  return doPatch('stock')
-    .catch(() => doPatch('Stock'))
-    .catch(err => { console.error('No se pudo actualizar stock en Airtable:', err); throw err; });
+  // Usamos el fieldName exacto que encontramos durante la lectura
+  const body = { fields: { [fieldName]: Number(nuevoStock) } };
+  
+  return fetch(url, { method: 'PATCH', headers, body: JSON.stringify(body) })
+    .then(res => {
+      if (!res.ok) {
+        // Intentar obtener más detalles del error de Airtable
+        return res.json().then(j => {
+          const err = new Error(`Airtable update error ${res.status} al actualizar campo ${fieldName}`);
+          err.detail = j;
+          throw err;
+        }).catch(() => {
+           const err = new Error(`Airtable update error ${res.status} (sin detalle JSON)`);
+           throw err;
+        });
+      }
+      return res.json();
+    })
+    .catch(err => {
+      // Nos aseguramos de relanzar el error para que la cadena de promesa principal falle
+      console.error('No se pudo actualizar stock en Airtable:', err);
+      throw err; 
+    });
 }
 
-// 12 - Procesar compra
+// 11b - Guardar registro de pedido en Airtable (MODIFICADA)
+function guardarPedidoEnAirtable(nombre, email, direccion, articulosStr, total) {
+  const url = `https://api.airtable.com/v0/${baseId}/${TABLE_PEDIDOS_NAME}`;
+  
+  const body = {
+    fields: {
+      Nombre: nombre,
+      Email: email,
+      Direccion: direccion,
+      ArticulosComprados: articulosStr,
+      TotalPagado: total
+    }
+  };
+
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${airtableToken}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  })
+  .then(res => {
+    if (!res.ok) {
+       // Si falla, obtenemos detalles y lanzamos un error
+       return res.json().then(errorDetalle => {
+           console.error('Detalle del error de Airtable (Pedidos):', errorDetalle);
+           throw new Error(`Error al guardar el pedido en Airtable (${res.status}). Detalles: ${JSON.stringify(errorDetalle)}`);
+       }).catch(() => {
+           throw new Error(`Error al guardar el pedido en Airtable (${res.status}). No se pudo obtener detalle.`);
+       });
+    }
+    console.log('Registro de pedido guardado en Airtable.');
+    return res.json();
+  })
+  .catch(err => {
+    console.error(err);
+    // Relanzamos el error para que la cadena de promesa principal lo atrape
+    throw err; 
+  });
+}
+
+// 12 - Procesar compra (MODIFICADA)
 function procesarCompraPara(items) {
   if (!Array.isArray(items) || !items.length) return Promise.reject(new Error('No hay artículos a procesar'));
 
@@ -359,15 +406,39 @@ function procesarCompraPara(items) {
       })
       .then(record => {
         const fields = record.fields || {};
-        const currentStock = safeParseInt(fields.stock ?? fields.Stock ?? fields.StockAvailable ?? 0, 0);
+
+        // --- Lógica mejorada para encontrar el campo de stock ---
+        let stockFieldName = null;
+        let currentStock = 0;
+
+        if (fields.stock !== undefined) {
+            stockFieldName = 'stock';
+            currentStock = safeParseInt(fields.stock, 0);
+        } else if (fields.Stock !== undefined) {
+            stockFieldName = 'Stock';
+            currentStock = safeParseInt(fields.Stock, 0);
+        } else if (fields.StockAvailable !== undefined) {
+            stockFieldName = 'StockAvailable';
+            currentStock = safeParseInt(fields.StockAvailable, 0);
+        }
+
+        if (stockFieldName === null) {
+            // Si no encontramos ningún campo de stock conocido, fallamos
+            throw new Error(`No se encontró un campo de stock ('stock', 'Stock', 'StockAvailable') para el item ${item.id} en Airtable.`);
+        }
+        // --- Fin de la lógica mejorada ---
+
         const art = datosDeArticulos.find(a => a.id === item.id);
         const referenciaStock = (art && Number.isFinite(art.stock)) ? art.stock : currentStock;
         const efectivoStock = Math.min(currentStock, referenciaStock);
+
         if (efectivoStock < item.cantidad) {
           throw new Error(`Stock insuficiente para "${(art && art.titulo) || item.id}". Disponible: ${efectivoStock}, pedido: ${item.cantidad}`);
         }
         const nuevoStock = efectivoStock - item.cantidad;
-        return actualizarStockEnAirtable(item.id, nuevoStock)
+        
+        // Pasamos el nombre del campo exacto a la función de actualización
+        return actualizarStockEnAirtable(item.id, nuevoStock, stockFieldName)
           .then(resRecord => {
             if (art) art.stock = nuevoStock;
             return resRecord;
@@ -400,12 +471,12 @@ function finalizarCompraYSincronizar(itemsArray) {
 
   if (!itemsToProcess.length) return Promise.reject(new Error('Carrito vacío'));
 
-  return procesarCompraPara(itemsToProcess)
-    .then(() => {
-      eliminarOcurrenciasDelCarritoProcesadas(itemsToProcess);
-      window.location.href = 'compra_lista.html';
-    })
-    .catch(err => {
+ return procesarCompraPara(itemsToProcess)
+  .then(() => {
+    eliminarOcurrenciasDelCarritoProcesadas(itemsToProcess);
+    
+  })
+  .catch(err => {
       console.error('Error al procesar compra:', err);
       throw err;
     });
@@ -439,7 +510,7 @@ function validarFormularioFacturacion(form) {
   return true;
 }
 
-// 16 - Bind formulario facturación
+// 16 - Bind formulario facturación (MODIFICADO)
 function bindFormularioFacturacion() {
   const form = document.getElementById('factura-form');
   if (!form) return;
@@ -461,24 +532,55 @@ function bindFormularioFacturacion() {
         ? finalizarCompraYSincronizar([{ id, cantidad: 1 }])
         : finalizarCompraYSincronizar();
 
-      accion
-        .catch(err => {
-          console.error(err);
-          alert('Error al finalizar la compra: ' + (err.message || err));
-        })
-        .finally(() => {
-          if (btn) {
-            btn.disabled = false;
-            btn.textContent = prevText;
-          }
-        });
+   // Esta cadena de promesas ahora manejará los errores correctamente
+   accion
+    .then(() => {
+      // ¡ÉXITO! El stock se actualizó.
+      // Ahora, preparamos los datos para guardar el registro del pedido.
+      try {
+        const nombre = form.querySelector('#nombre')?.value?.trim();
+        const email = form.querySelector('#email')?.value?.trim();
+        const direccion = form.querySelector('#direccion')?.value?.trim();
+        const articulosStr = form.querySelector('#articulo')?.value || 'N/A';
+        const totalRaw = document.querySelector('form h3')?.textContent || 'Total: 0';
+        const total = safeParseFloat(totalRaw.replace('Total: ', ''));
+    
+        // Llamamos a la función Y DEVOLVEMOS su promesa
+        return guardarPedidoEnAirtable(nombre, email, direccion, articulosStr, total);
+    
+      } catch (err) {
+        // Si la preparación SÍNCRONA falla, rechazamos la promesa
+        console.error('Error al preparar los datos del pedido:', err);
+        return Promise.reject(err); // Pasa el error al .catch() principal
+      }
+    })
+    .then(() => {
+      // Este .then() SÓLO se ejecuta si guardarPedidoEnAirtable tuvo éxito
+      // ¡Ahora sí, redirigimos!
+      window.location.href = 'compra_lista.html';
+    })
+    .catch(err => {
+      // CUALQUIER error en la cadena (actualizar stock O guardar pedido)
+      // terminará aquí y mostrará la alerta.
+      console.error(err);
+      alert('Error al finalizar la compra: ' + (err.message || err));
+    })
+    .finally(() => {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = prevText;
+      }
+    });
     } else {
+      // Fallback por si el botón no se encuentra (aunque no debería pasar)
       const accion = (buy === 'single' && id)
         ? finalizarCompraYSincronizar([{ id, cantidad: 1 }])
         : finalizarCompraYSincronizar();
-      accion.catch(err => {
-        console.error(err);
-        alert('Error al finalizar la compra: ' + (err.message || err));
+      accion
+        .then(() => { window.location.href = 'compra_lista.html'; })
+        .catch(err => {
+          console.error(err);
+          alert('Error al finalizar la compra: ' + (err.message || err));
       });
     }
   });
