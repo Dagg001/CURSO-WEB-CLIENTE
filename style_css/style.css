@@ -1528,6 +1528,101 @@ nav, header, main, footer {
 .admin-item-actions .btn-edit { background: #362209; }
 .admin-item-actions .btn-edit:hover { background: #5a3a12; }
 
+
+#modal-editar-articulo {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  max-width: 600px;
+  width: 90vw;
+  background: var(--color-fondo);
+  position: fixed; 
+  top: 50%;        
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  margin: 0;      
+}
+
+
+#modal-editar-articulo::backdrop {
+
+}
+
+#modal-editar-articulo .modal-contenido {
+  position: relative;
+  /* Reutilizamos los estilos del form de facturación */
+  background: var(--color-primario);
+  color: var(--color-texto-claro);
+  border-radius: 12px;
+  padding: 32px 36px;
+  font-size: 18px;
+}
+
+#modal-editar-articulo fieldset {
+  border-color: var(--color-texto-claro);
+  margin-bottom: 0;
+}
+#modal-editar-articulo legend {
+  color: var(--color-texto-oscuro);
+}
+#modal-editar-articulo label {
+  color: var(--color-texto-claro);
+}
+
+/* Inputs del modal (reutiliza estilos de facturación) */
+#modal-editar-articulo input[type="text"],
+#modal-editar-articulo input[type="number"],
+#modal-editar-articulo textarea {
+  width: 100%;
+  padding: 12px 12px;
+  margin-bottom: 16px;
+  border: 2px solid var(--color-primario-oscuro);
+  border-radius: 12px;
+  font-size: 18px;
+  background: var(--color-fondo);
+  color: var(--color-texto-oscuro);
+  font-family: inherit;
+}
+
+/* Botón de cerrar 'X' */
+.btn-close-modal {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-texto-oscuro);
+  color: var(--color-texto-claro);
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.btn-close-modal:hover {
+  background: var(--color-texto-oscuro-hover);
+}
+
+/* Botón Guardar Cambios (reutiliza estilo submit) */
+#btn-guardar-cambios {
+  background-color: var(--color-texto-oscuro);
+  color: var(--color-texto-claro);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background-color .2s ease, box-shadow .2s ease, transform .06s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,.16);
+}
+#btn-guardar-cambios:hover {
+  background-color: var(--color-texto-oscuro-hover);
+}
+
 /* Media query para ajustar en móviles */
 @media (max-width: 600px) {
   .admin-list-item {

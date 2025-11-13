@@ -57,6 +57,38 @@
             <h3>Artículos en el sistema</h3>
             <ol id="admin-list"></ol>
         </section>
+
+<dialog id="modal-editar-articulo">
+    <div class="modal-contenido">
+        <form id="form-editar-articulo">
+            <fieldset>
+                <legend>Editar artículo</legend>
+
+                <label for="edit-articulo-titulo">Título:</label>
+                <input type="text" id="edit-articulo-titulo" name="titulo" required>
+
+                <label for="edit-articulo-descripcion-corta">Descripción Corta:</label>
+                <textarea id="edit-articulo-descripcion-corta" name="descripcion-corta" rows="3"></textarea>
+
+                <label for="edit-articulo-descripcion-larga">Descripción Larga:</label>
+                <textarea id="edit-articulo-descripcion-larga" name="descripcion-larga" rows="5"></textarea>
+
+                <label for="edit-articulo-precio">Precio:</label>
+                <input type="number" id="edit-articulo-precio" name="precio" step="0.01" required>
+
+                <label for="edit-articulo-stock">Stock:</label>
+                <input type="number" id="edit-articulo-stock" name="stock" min="0" required>
+
+                <label for="edit-articulo-imagen">URL de Imagen:</label>
+                <input type="text" id="edit-articulo-imagen" name="imagen" placeholder="https://ejemplo.com/imagen.jpg">
+
+                <button type="submit" id="btn-guardar-cambios">Guardar Cambios</button>
+            </fieldset>
+        </form>
+        <button type="button" class="btn-close-modal" id="btn-cerrar-modal">X</button>
+    </div>
+</dialog>
+
     </main>
 
     <footer class="footer">

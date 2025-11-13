@@ -146,9 +146,7 @@ function generarListaDeArticulos(lista = datosDeArticulos) {
     contenedor.appendChild(div);
   });
 
-  contenedor.querySelectorAll('button[data-id]').forEach(btn => {
-    btn.addEventListener('click', () => agregarAlCarrito(btn.getAttribute('data-id')));
-  });
+
 }
 
 // 7 - Filtros y orden
