@@ -1,4 +1,3 @@
-
 /* --------------------------------
  1. Variables Globales 
 --------------------------------
@@ -1418,5 +1417,133 @@ nav, header, main, footer {
   .pagina-secundaria .formulario-compra button {
     font-size: 15px;
     padding: 8px 14px;
+  }
+}
+
+
+/* --- Estilos para la lista de admin (nueva) --- */
+#admin-list-section {
+  width: 100%;
+  max-width: 900px; /* Un ancho más razonable */
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+#admin-list {
+  list-style: none; /* Quita los números del <ol> */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espacio entre items */
+}
+
+/* Estilo para el ítem de la lista */
+.admin-list-item {
+  display: flex;
+  flex-wrap: wrap; /* Permite que se reordene en móviles */
+  align-items: center;
+  gap: 16px;
+  background: var(--color-primario, #fff);
+  color: var(--color-texto-claro, #222);
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+/* Mensaje de lista vacía */
+.admin-list-empty {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: var(--color-texto-oscuro);
+}
+
+/* 1. Imagen (Izquierda) */
+.admin-item-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  border: 1px solid rgba(0,0,0,0.06);
+  flex-shrink: 0; /* Evita que la imagen se encoja */
+}
+
+/* 2. Info (Centro) */
+.admin-item-info {
+  flex: 1 1 200px; /* Crece para ocupar el espacio, base de 200px */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 150px; /* Evita que se comprima demasiado */
+}
+.admin-item-info h4,
+.admin-item-info p {
+  margin: 0;
+  padding: 0;
+}
+.admin-item-info .admin-item-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-texto-claro);
+}
+.admin-item-info .admin-item-precio {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-texto-oscuro); /* Más contraste para el precio */
+}
+.admin-item-info .admin-item-stock {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* 3. Acciones (Derecha) */
+.admin-item-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-grow: 1; /* Crece para llenar espacio en móviles */
+  flex-basis: 180px; /* Asegura espacio para los 2 botones */
+}
+
+.admin-item-actions button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: var(--color-boton, #333);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.admin-item-actions button:active {
+  transform: scale(0.96);
+}
+
+.admin-item-actions .btn-delete { background: #c0392b; }
+.admin-item-actions .btn-delete:hover { background: #a93226; }
+.admin-item-actions .btn-edit { background: #362209; }
+.admin-item-actions .btn-edit:hover { background: #5a3a12; }
+
+/* Media query para ajustar en móviles */
+@media (max-width: 600px) {
+  .admin-list-item {
+    gap: 12px; /* Reduce el gap */
+  }
+  .admin-item-info {
+    /* La info toma todo el ancho menos la imagen */
+    flex-basis: calc(100% - 92px); /* 80px img + 12px gap */
+  }
+  .admin-item-actions {
+    /* Los botones van abajo */
+    flex-basis: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(250, 242, 225, 0.2);
   }
 }

@@ -22,23 +22,47 @@
         </div>
     </header>
 
-    <h2>Crear Nuevo Artículo</h2>
+    <h2>Administración de Artículos</h2>
 
     <main>
-        <form id="form-crear-articulo">
-            <fieldset>
-                <legend>Datos del Artículo</legend>
-                
-                <label for="articulo-titulo">Título:</label>
-                <input type="text" id="articulo-titulo" name="titulo" required>
-                
-                <label for="articulo-descripcion">Descripción:</label>
-                <textarea id="articulo-descripcion" name="descripcion" rows="5"></textarea>
-                
-                <label for="articulo-precio">Precio:</label>
-                <input type="number" id="articulo-precio" name="precio" step="0.01" required>
-                
-                <label for="articulo-imagen">URL de Imagen:</label>
-                <input type="text" id="articulo-imagen" name="imagen" placeholder="https://ejemplo.com/imagen.jpg" required>
+        <section id="admin-controls">
+            <form id="form-crear-articulo">
+                <fieldset>
+                    <legend>Crear nuevo artículo</legend>
 
-                <button type="submit" id="btn-submit-articulo">Crear</button>
+                    <label for="articulo-titulo">Título:</label>
+                    <input type="text" id="articulo-titulo" name="titulo" required>
+
+<label for="articulo-descripcion-corta">Descripción Corta:</label>
+<textarea id="articulo-descripcion-corta" name="descripcion-corta" rows="3"></textarea>
+
+<label for="articulo-descripcion-larga">Descripción Larga:</label>
+<textarea id="articulo-descripcion-larga" name="descripcion-larga" rows="5"></textarea>
+
+                    <label for="articulo-precio">Precio:</label>
+                    <input type="number" id="articulo-precio" name="precio" step="0.01" required>
+
+                    <label for="articulo-stock">Stock:</label>
+                    <input type="number" id="articulo-stock" name="stock" min="0" required>
+
+                    <label for="articulo-imagen">URL de Imagen:</label>
+                    <input type="text" id="articulo-imagen" name="imagen" placeholder="https://ejemplo.com/imagen.jpg">
+
+                    <button type="submit" id="btn-submit-articulo">Crear</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <section id="admin-list-section">
+            <h3>Artículos en el sistema</h3>
+            <ol id="admin-list"></ol>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; Zerymnor</p>
+    </footer>
+
+    <script type="module" src="./admin.js"></script>
+</body>
+</html>
